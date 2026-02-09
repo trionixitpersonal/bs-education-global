@@ -19,7 +19,7 @@ export default function DestinationsAdminPage() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingDestination, setEditingDestination] = useState<Destination | undefined>(undefined);
+  const [editingDestination, setEditingDestination] = useState<Destination | null>(null);
 
   const fetchDestinations = async () => {
     try {
@@ -44,7 +44,7 @@ export default function DestinationsAdminPage() {
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
-    setEditingDestination(undefined);
+    setEditingDestination(null);
     fetchDestinations();
   };
 
