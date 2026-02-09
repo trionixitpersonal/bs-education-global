@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate zip file
-    const zipBlob = await zip.generateAsync({ type: "nodebuffer" });
+    const zipBlob = await zip.generateAsync({ type: "uint8array" });
     
     return new NextResponse(zipBlob, {
       headers: {
