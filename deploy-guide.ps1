@@ -71,7 +71,7 @@ Write-Host "   ssh root@72.60.192.200" -ForegroundColor White
 Write-Host "   Password: TriONIx@2050##" -ForegroundColor White
 Write-Host ""
 Write-Host "2. Once connected, download and run the deployment script:" -ForegroundColor Cyan
-Write-Host "   wget https://raw.githubusercontent.com/clickbitDev/bs-edu/main/deploy-to-vps.sh" -ForegroundColor White
+Write-Host "   wget https://raw.githubusercontent.com/trionixitpersonal/bs-education-global/main/deploy-to-vps.sh" -ForegroundColor White
 Write-Host "   chmod +x deploy-to-vps.sh" -ForegroundColor White
 Write-Host "   ./deploy-to-vps.sh" -ForegroundColor White
 Write-Host ""
@@ -90,14 +90,14 @@ Write-Host "   npm install -g pm2" -ForegroundColor White
 Write-Host ""
 Write-Host "   # Clone repository" -ForegroundColor Gray
 Write-Host "   cd /var/www" -ForegroundColor White
-Write-Host "   git clone https://github.com/clickbitDev/bs-edu.git" -ForegroundColor White
-Write-Host "   cd bs-edu/client" -ForegroundColor White
+Write-Host "   git clone https://github.com/trionixitpersonal/bs-education-global.git" -ForegroundColor White
+Write-Host "   cd bs-education-global/client" -ForegroundColor White
 Write-Host ""
 Write-Host "   # Install dependencies" -ForegroundColor Gray
 Write-Host "   npm install" -ForegroundColor White
 Write-Host ""
 Write-Host "3. Create environment file:" -ForegroundColor Cyan
-Write-Host "   nano /var/www/bs-edu/client/.env.local" -ForegroundColor White
+Write-Host "   nano /var/www/bs-education-global/client/.env.local" -ForegroundColor White
 Write-Host ""
 Write-Host "   Add these variables:" -ForegroundColor Gray
 Write-Host "   NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>" -ForegroundColor White

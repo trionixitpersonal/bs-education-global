@@ -58,13 +58,13 @@ fi
 # Step 6: Clone the repository
 echo -e "${GREEN}Step 6: Cloning repository...${NC}"
 cd /var/www
-if [ -d "bs-edu" ]; then
+if [ -d "bs-education-global" ]; then
     echo -e "${YELLOW}Repository exists, pulling latest changes...${NC}"
-    cd bs-edu
+    cd bs-education-global
     git pull origin main
 else
-    git clone https://github.com/clickbitDev/bs-edu.git
-    cd bs-edu
+    git clone https://github.com/trionixitpersonal/bs-education-global.git
+    cd bs-education-global
 fi
 
 # Navigate to client directory
@@ -151,7 +151,7 @@ echo "======================================${NC}"
 echo ""
 echo -e "${YELLOW}Next Steps:${NC}"
 echo "1. Edit environment file:"
-echo "   nano /var/www/bs-edu/client/.env.local"
+echo "   nano /var/www/bs-education-global/client/.env.local"
 echo ""
 echo "2. Add your Supabase credentials"
 echo ""
@@ -159,7 +159,7 @@ echo "3. Generate NextAuth secret:"
 echo "   openssl rand -base64 32"
 echo ""
 echo "4. Rebuild and restart:"
-echo "   cd /var/www/bs-edu/client"
+echo "   cd /var/www/bs-education-global/client"
 echo "   npm run build"
 echo "   pm2 restart bs-edu"
 echo ""

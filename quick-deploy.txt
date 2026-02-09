@@ -14,8 +14,8 @@ pm2 startup systemd -u root --hp /root
 
 # STEP 3: Clone Repository
 cd /var/www
-git clone https://github.com/clickbitDev/bs-edu.git
-cd bs-edu/client
+git clone https://github.com/trionixitpersonal/bs-education-global.git
+cd bs-education-global/client
 
 # STEP 4: Create Environment File
 cat > .env.local << 'EOF'
