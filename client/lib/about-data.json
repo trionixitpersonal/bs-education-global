@@ -1,0 +1,100 @@
+{
+  "hero": {
+    "title": "Transforming Dreams Into Reality",
+    "subtitle": "Your trusted partner in international education since 2015"
+  },
+  "stats": [
+    {
+      "label": "Students Helped",
+      "value": "13,000+",
+      "icon": "Users"
+    },
+    {
+      "label": "Partner Universities",
+      "value": "500+",
+      "icon": "Globe"
+    },
+    {
+      "label": "Countries Covered",
+      "value": "50+",
+      "icon": "Award"
+    },
+    {
+      "label": "Success Rate",
+      "value": "95%",
+      "icon": "TrendingUp"
+    }
+  ],
+  "mission": {
+    "title": "Our Mission",
+    "description": "At BS Education Global, we're dedicated to making international education accessible to students worldwide. Since 2015, we've been helping thousands of students achieve their dreams of studying abroad, particularly in Australia.\n\nWe believe that education has the power to transform lives and communities. Our mission is to provide comprehensive support throughout your entire educational journey—from selecting the right university to settling into your new life abroad.\n\nWith deep partnerships across Australian universities and a team of experienced education consultants, we ensure every student receives personalized guidance tailored to their unique goals and circumstances."
+  },
+  "values": [
+    {
+      "icon": "Target",
+      "title": "Excellence",
+      "description": "We strive for the highest standards in everything we do, ensuring quality support at every step of your journey."
+    },
+    {
+      "icon": "Shield",
+      "title": "Integrity",
+      "description": "We operate with complete honesty and transparency, building trust through ethical practices and genuine care."
+    },
+    {
+      "icon": "Heart",
+      "title": "Student-Centric",
+      "description": "Your success is our priority. We tailor our services to meet your unique needs and aspirations."
+    },
+    {
+      "icon": "Lightbulb",
+      "title": "Innovation",
+      "description": "We continuously improve our services using the latest technology and educational insights."
+    }
+  ],
+  "services": [
+    {
+      "title": "University Selection",
+      "description": "Expert guidance in choosing the perfect institution for your academic goals"
+    },
+    {
+      "title": "Application Support",
+      "description": "Comprehensive assistance with application processes and documentation"
+    },
+    {
+      "title": "Visa Assistance",
+      "description": "Step-by-step support through visa application and interview preparation"
+    },
+    {
+      "title": "Scholarship Guidance",
+      "description": "Help identifying and applying for scholarships and financial aid"
+    },
+    {
+      "title": "Pre-Departure Support",
+      "description": "Orientation sessions and practical guidance for your move abroad"
+    },
+    {
+      "title": "Post-Arrival Services",
+      "description": "Continued support with accommodation, banking, and settling in"
+    }
+  ],
+  "team": [
+    {
+      "name": "Md bappe",
+      "role": "Founder & CEO",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+      "bio": "18+ years in international education consulting"
+    },
+    {
+      "name": "Michael Chen",
+      "role": "Director of Admissions",
+      "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+      "bio": "Former university admissions officer"
+    },
+    {
+      "name": "Emily Rodriguez",
+      "role": "Head of Student Services",
+      "image": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80",
+      "bio": "Specialized in student welfare and support"
+    }
+  ]
+}

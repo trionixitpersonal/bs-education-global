@@ -1,0 +1,92 @@
+{
+  "hero": {
+    "title": "Join Our Mission",
+    "subtitle": "Help shape the future of international education"
+  },
+  "benefits": [
+    {
+      "icon": "Heart",
+      "title": "Health & Wellness",
+      "description": "Comprehensive health insurance, mental health support, and wellness programs"
+    },
+    {
+      "icon": "GraduationCap",
+      "title": "Learning & Development",
+      "description": "Professional development budget, training programs, and conference attendance"
+    },
+    {
+      "icon": "Coffee",
+      "title": "Work-Life Balance",
+      "description": "Flexible working hours, remote work options, and generous vacation policy"
+    },
+    {
+      "icon": "TrendingUp",
+      "title": "Career Growth",
+      "description": "Clear career progression paths, mentorship programs, and leadership opportunities"
+    },
+    {
+      "icon": "Users",
+      "title": "Team Culture",
+      "description": "Collaborative environment, team events, and inclusive workplace culture"
+    },
+    {
+      "icon": "DollarSign",
+      "title": "Competitive Compensation",
+      "description": "Market-leading salaries, performance bonuses, and equity options"
+    }
+  ],
+  "positions": [
+    {
+      "title": "Senior Education Consultant",
+      "department": "Student Services",
+      "location": "Sydney, Australia",
+      "type": "Full-time",
+      "description": "Guide students through the university application process, provide expert advice on course selection, and maintain relationships with partner universities.",
+      "requirements": [
+        "5+ years experience in education consulting or admissions",
+        "Strong knowledge of Australian university systems",
+        "Excellent communication and interpersonal skills",
+        "Bachelor's degree in Education or related field"
+      ]
+    },
+    {
+      "title": "Digital Marketing Manager",
+      "department": "Marketing",
+      "location": "Melbourne, Australia",
+      "type": "Full-time",
+      "description": "Lead our digital marketing strategy, manage social media campaigns, and drive student engagement across multiple channels.",
+      "requirements": [
+        "3+ years in digital marketing, preferably in education sector",
+        "Proven track record in SEO, SEM, and social media marketing",
+        "Experience with marketing automation tools",
+        "Strong analytical and creative skills"
+      ]
+    },
+    {
+      "title": "Student Support Specialist",
+      "department": "Student Services",
+      "location": "Brisbane, Australia",
+      "type": "Full-time",
+      "description": "Provide comprehensive support to international students, assist with visa applications, and coordinate pre-departure orientations.",
+      "requirements": [
+        "2+ years in student support or customer service",
+        "Understanding of visa processes and regulations",
+        "Multilingual skills preferred",
+        "Empathetic and solution-oriented mindset"
+      ]
+    },
+    {
+      "title": "Content Writer",
+      "department": "Marketing",
+      "location": "Remote",
+      "type": "Full-time / Contract",
+      "description": "Create engaging content for our blog, website, and marketing materials. Focus on education-related topics and student success stories.",
+      "requirements": [
+        "Excellent writing and editing skills",
+        "Experience in content marketing or journalism",
+        "Knowledge of SEO best practices",
+        "Portfolio of published work required"
+      ]
+    }
+  ]
+}

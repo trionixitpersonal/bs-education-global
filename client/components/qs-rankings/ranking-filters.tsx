@@ -3,13 +3,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { QSRanking } from "@/lib/mock-data/types";
 
-export function RankingFilters() {
-  const [selectedRegion, setSelectedRegion] = useState<QSRanking["region"] | null>(null);
-  const [selectedDiscipline, setSelectedDiscipline] = useState<QSRanking["discipline"] | null>(null);
+interface RankingFiltersProps {
+  onFilterChange: (filters: { region: string | null; discipline: string | null }) => void;
+}
 
-  const regions: QSRanking["region"][] = [
+export function RankingFilters({ onFilterChange }: RankingFiltersProps) {
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+  const [selectedDiscipline, setSelectedDiscipline] = useState<string | null>(null);
+
+  const regions: string[] = [
     "Global",
     "Asia",
     "Europe",
@@ -19,7 +22,7 @@ export function RankingFilters() {
     "Africa",
   ];
 
-  const disciplines: QSRanking["discipline"][] = [
+  const disciplines: string[] = [
     "Overall",
     "Engineering",
     "Business",
@@ -33,6 +36,7 @@ export function RankingFilters() {
   const clearFilters = () => {
     setSelectedRegion(null);
     setSelectedDiscipline(null);
+    onFilterChange({ region: null, discipline: null });
   };
 
   const hasActiveFilters = selectedRegion || selectedDiscipline;
@@ -49,9 +53,11 @@ export function RankingFilters() {
               key={region}
               variant={selectedRegion === region ? "default" : "outline"}
               size="sm"
-              onClick={() =>
-                setSelectedRegion(selectedRegion === region ? null : region)
-              }
+              onClick={() => {
+                const newRegion = selectedRegion === region ? null : region;
+                setSelectedRegion(newRegion);
+                onFilterChange({ region: newRegion, discipline: selectedDiscipline });
+              }}
             >
               {region}
             </Button>
@@ -67,11 +73,11 @@ export function RankingFilters() {
               key={discipline}
               variant={selectedDiscipline === discipline ? "default" : "outline"}
               size="sm"
-              onClick={() =>
-                setSelectedDiscipline(
-                  selectedDiscipline === discipline ? null : discipline
-                )
-              }
+              onClick={() => {
+                const newDiscipline = selectedDiscipline === discipline ? null : discipline;
+                setSelectedDiscipline(newDiscipline);
+                onFilterChange({ region: selectedRegion, discipline: newDiscipline });
+              }}
             >
               {discipline}
             </Button>

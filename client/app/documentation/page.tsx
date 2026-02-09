@@ -1,5 +1,5 @@
-import { getDocumentationData } from "@/lib/mock-data/documentation-data";
 import { DocumentGuideCard } from "@/components/documentation/document-guide-card";
+import { DocumentGuide } from "@/lib/mock-data/types";
 
 export const metadata = {
   title: "Documentation Support | BS Education",
@@ -7,11 +7,43 @@ export const metadata = {
     "Get help with preparing and organizing all required documents for your visa application.",
 };
 
+async function getDocumentationGuides() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/documentation`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      console.error("Failed to fetch documentation guides");
+      return [];
+    }
+
+    const data = await res.json();
+    
+    // Map database fields to frontend fields
+    return data.map((guide: any) => ({
+      id: guide.id,
+      title: guide.title,
+      country: guide.country,
+      visaType: guide.visa_type,
+      documents: guide.documents,
+      checklist: guide.checklist,
+      templates: guide.templates,
+    })) as DocumentGuide[];
+  } catch (error) {
+    console.error("Error fetching documentation guides:", error);
+    return [];
+  }
+}
+
 export default async function DocumentationPage() {
-  const guides = await getDocumentationData();
+  const guides = await getDocumentationGuides();
 
   return (
-    <main className="w-full overflow-x-hidden">
+    <main className="w-full overflow-x-hidden pt-24 lg:pt-28">
       <section className="w-full bg-background py-12 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8 text-center">

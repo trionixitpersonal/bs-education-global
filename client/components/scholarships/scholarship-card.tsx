@@ -5,9 +5,10 @@ import Link from "next/link";
 
 interface ScholarshipCardProps {
   scholarship: Scholarship;
+  onDetailsClick?: () => void;
 }
 
-export function ScholarshipCard({ scholarship }: ScholarshipCardProps) {
+export function ScholarshipCard({ scholarship, onDetailsClick }: ScholarshipCardProps) {
   const isDeadlineSoon =
     new Date(scholarship.deadline) <
     new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
@@ -64,10 +65,10 @@ export function ScholarshipCard({ scholarship }: ScholarshipCardProps) {
 
       <div className="mt-auto flex gap-2">
         <Button asChild className="flex-1">
-          <Link href={scholarship.applicationLink}>Apply Now</Link>
+          <Link href={scholarship.application_link || '#'}>Apply Now</Link>
         </Button>
-        <Button asChild variant="outline">
-          <Link href={`/scholarships/${scholarship.id}`}>Details</Link>
+        <Button variant="outline" onClick={onDetailsClick}>
+          Details
         </Button>
       </div>
     </div>

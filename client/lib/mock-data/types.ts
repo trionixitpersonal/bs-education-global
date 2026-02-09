@@ -26,6 +26,7 @@ export interface VisaGuide {
   cost: string;
   documents: string[];
   description: string;
+  guideLink?: string;
 }
 
 export interface Resource {

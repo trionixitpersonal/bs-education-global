@@ -1,11 +1,21 @@
 "use client";
 
-import { QSRanking } from "@/lib/mock-data/types";
 import { ArrowUp, ArrowDown, Minus } from "lucide-react";
 import { useState } from "react";
 
+interface Ranking {
+  id: string;
+  university_name: string;
+  rank: number;
+  country: string;
+  region: string;
+  discipline: string;
+  score: number;
+  year: number;
+}
+
 interface RankingTableProps {
-  rankings: QSRanking[];
+  rankings: Ranking[];
 }
 
 export function RankingTable({ rankings }: RankingTableProps) {
@@ -93,7 +103,7 @@ export function RankingTable({ rankings }: RankingTableProps) {
                   #{ranking.rank}
                 </span>
               </td>
-              <td className="p-4 font-medium">{ranking.university}</td>
+              <td className="p-4 font-medium">{ranking.university_name}</td>
               <td className="p-4 text-sm text-muted-foreground">
                 {ranking.country}
               </td>

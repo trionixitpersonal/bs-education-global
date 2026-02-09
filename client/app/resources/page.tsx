@@ -1,18 +1,69 @@
-import { getResourcesData } from "@/lib/mock-data/resources-data";
+"use client";
+
+import { useEffect, useState } from "react";
 import { ResourceCard } from "@/components/resources/resource-card";
 import { ResourceFilters } from "@/components/resources/resource-filters";
 
-export const metadata = {
-  title: "Resources | BS Education",
-  description:
-    "Access guides, articles, videos, tools, and templates to help you with your study abroad journey.",
-};
+interface Resource {
+  id: string;
+  title: string;
+  description: string;
+  category: "Guide" | "Article" | "Video" | "Tool" | "Template";
+  link: string;
+  read_time?: string;
+  tags: string[];
+  published_at: string;
+}
 
-export default async function ResourcesPage() {
-  const resources = await getResourcesData();
+export default function ResourcesPage() {
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        const response = await fetch("/api/resources");
+        const data = await response.json();
+        
+        // Map database fields to match component's expected format
+        const mappedData = data.map((resource: any) => ({
+          id: resource.id,
+          title: resource.title,
+          description: resource.description,
+          category: resource.category,
+          link: resource.link,
+          readTime: resource.read_time,
+          tags: resource.tags || [],
+          publishedAt: resource.published_at,
+        }));
+        
+        setResources(mappedData);
+      } catch (error) {
+        console.error("Failed to fetch resources:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchResources();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <main className="w-full overflow-x-hidden pt-24 lg:pt-28">
+        <section className="w-full bg-background py-12 lg:py-20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center p-8">
+              <div className="text-lg">Loading resources...</div>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   return (
-    <main className="w-full overflow-x-hidden">
+    <main className="w-full overflow-x-hidden pt-24 lg:pt-28">
       <section className="w-full bg-background py-12 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8 text-center">

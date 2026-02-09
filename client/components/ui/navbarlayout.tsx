@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { User } from "lucide-react";
 import {
   Navbar,
   NavBody,
@@ -84,19 +87,19 @@ const visaItems: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Country-Specific Requirements",
-    href: "#country-requirements",
+    href: "/country-requirements",
     description:
       "Detailed visa requirements and procedures for Australia, UK, USA, Canada, and more.",
   },
   {
     title: "Visa Interview Preparation",
-    href: "#visa-interview",
+    href: "/interview-preparation",
     description:
       "Expert tips and practice resources to help you prepare for your visa interview.",
   },
   {
     title: "Post-Arrival Support",
-    href: "#post-arrival",
+    href: "/post-arrival-support",
     description:
       "Essential information and support for your first steps after arriving in your study destination.",
   },
@@ -110,6 +113,17 @@ export function NavbarWrapper({
   onBookCallClick,
 }: NavbarWrapperProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+  };
+
+  const handleProfileClick = () => {
+    router.push("/dashboard/profile");
+  };
 
   // Mobile menu items - simplified version for mobile
   const mobileMenuItems = [
@@ -240,12 +254,27 @@ export function NavbarWrapper({
             </NavigationMenuList>
           </NavigationMenu>
           <div className="ml-auto flex items-center gap-4 flex-shrink-0">
-            <NavbarButton variant="secondary" onClick={onLoginClick}>
+            <NavbarButton variant="secondary" href="tel:+611300598410">
               Book a call
             </NavbarButton>
-            <NavbarButton variant="primary" onClick={onBookCallClick}>
-              Login
-            </NavbarButton>
+            {session ? (
+              <>
+                <button
+                  onClick={handleProfileClick}
+                  className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 hover:bg-blue-600 text-white transition-colors"
+                  title="Profile"
+                >
+                  <User className="w-5 h-5" />
+                </button>
+                <NavbarButton variant="primary" onClick={handleSignOut}>
+                  Sign Out
+                </NavbarButton>
+              </>
+            ) : (
+              <NavbarButton variant="primary" onClick={onLoginClick}>
+                Login
+              </NavbarButton>
+            )}
           </div>
         </NavBody>
 
@@ -274,23 +303,49 @@ export function NavbarWrapper({
               </Link>
             ))}
             <div className="flex w-full flex-col gap-4">
-              {showLoginButton && (
-                <NavbarButton
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onLoginClick?.();
-                  }}
-                  variant="secondary"
-                  className="w-full"
-                >
-                  Login
-                </NavbarButton>
+              {session ? (
+                <>
+                  <NavbarButton
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      handleProfileClick();
+                    }}
+                    variant="secondary"
+                    className="w-full flex items-center justify-center gap-2"
+                  >
+                    <User className="w-4 h-4" />
+                    Profile
+                  </NavbarButton>
+                  <NavbarButton
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      handleSignOut();
+                    }}
+                    variant="primary"
+                    className="w-full"
+                  >
+                    Sign Out
+                  </NavbarButton>
+                </>
+              ) : (
+                showLoginButton && (
+                  <NavbarButton
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onLoginClick?.();
+                    }}
+                    variant="secondary"
+                    className="w-full"
+                  >
+                    Login
+                  </NavbarButton>
+                )
               )}
               {showBookCallButton && (
                 <NavbarButton
+                  href="tel:+611300598410"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    onBookCallClick?.();
                   }}
                   variant="primary"
                   className="w-full"

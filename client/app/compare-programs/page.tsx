@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getProgramsData } from "@/lib/mock-data/compare-programs-data";
 import { Program } from "@/lib/mock-data/types";
 import { ProgramSelector } from "@/components/compare-programs/program-selector";
 import { ProgramComparisonTable } from "@/components/compare-programs/program-comparison-table";
@@ -14,7 +13,8 @@ export default function CompareProgramsPage() {
   useEffect(() => {
     async function loadPrograms() {
       try {
-        const data = await getProgramsData();
+        const response = await fetch('/api/programs');
+        const data = await response.json();
         setPrograms(data);
       } catch (error) {
         console.error("Error loading programs:", error);
@@ -39,7 +39,7 @@ export default function CompareProgramsPage() {
 
   if (loading) {
     return (
-      <main className="w-full overflow-x-hidden">
+      <main className="w-full overflow-x-hidden pt-24 lg:pt-28">
         <section className="w-full bg-background py-12 lg:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-8 text-center">
@@ -54,7 +54,7 @@ export default function CompareProgramsPage() {
   }
 
   return (
-    <main className="w-full overflow-x-hidden">
+    <main className="w-full overflow-x-hidden pt-24 lg:pt-28">
       <section className="w-full bg-background py-12 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8 text-center">

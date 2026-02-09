@@ -15,7 +15,7 @@ export async function getSupportOptions(): Promise<SupportOption[]> {
       description:
         "Browse our comprehensive knowledge base with articles, guides, and answers to common questions.",
       icon: "help-circle",
-      link: "#help-center",
+      link: "/support/help-center",
       category: "Help",
     },
     {
@@ -24,7 +24,7 @@ export async function getSupportOptions(): Promise<SupportOption[]> {
       description:
         "Get in touch with our support team via email, phone, or live chat. We're here to help 24/7.",
       icon: "mail",
-      link: "#contact",
+      link: "/support/contact",
       category: "Contact",
     },
     {
@@ -33,7 +33,7 @@ export async function getSupportOptions(): Promise<SupportOption[]> {
       description:
         "Find quick answers to the most common questions about applications, visas, and scholarships.",
       icon: "message-circle",
-      link: "#faqs",
+      link: "/support/faqs",
       category: "FAQ",
     },
     {
@@ -42,7 +42,7 @@ export async function getSupportOptions(): Promise<SupportOption[]> {
       description:
         "Schedule a one-on-one consultation with our education advisors to discuss your study abroad plans.",
       icon: "calendar",
-      link: "#book-call",
+      link: "/support/book-consultation",
       category: "Booking",
     },
     {
@@ -51,7 +51,7 @@ export async function getSupportOptions(): Promise<SupportOption[]> {
       description:
         "Get expert feedback on your application materials including SOP, CV, and recommendation letters.",
       icon: "file-check",
-      link: "#application-review",
+      link: "/support/application-review",
       category: "Help",
     },
     {
@@ -60,7 +60,7 @@ export async function getSupportOptions(): Promise<SupportOption[]> {
       description:
         "Verify your academic documents and get them certified for international university applications.",
       icon: "shield-check",
-      link: "#document-verification",
+      link: "/support/document-verification",
       category: "Help",
     },
   ];

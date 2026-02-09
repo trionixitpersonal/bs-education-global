@@ -22,24 +22,24 @@ const studyLevels = [
 ];
 
 const subjects = [
-  { value: "computer-science", label: "Computer Science" },
-  { value: "business", label: "Business Administration" },
-  { value: "engineering", label: "Engineering" },
-  { value: "medicine", label: "Medicine" },
-  { value: "law", label: "Law" },
-  { value: "arts", label: "Arts & Humanities" },
-  { value: "science", label: "Natural Sciences" },
-  { value: "social-science", label: "Social Sciences" },
+  { value: "Computer Science", label: "Computer Science" },
+  { value: "Business Administration", label: "Business Administration" },
+  { value: "Engineering", label: "Engineering" },
+  { value: "Medicine", label: "Medicine" },
+  { value: "Law", label: "Law" },
+  { value: "Arts & Humanities", label: "Arts & Humanities" },
+  { value: "Natural Sciences", label: "Natural Sciences" },
+  { value: "Social Sciences", label: "Social Sciences" },
 ];
 
 const locations = [
-  { value: "australia", label: "Australia" },
-  { value: "uk", label: "United Kingdom" },
-  { value: "usa", label: "United States" },
-  { value: "canada", label: "Canada" },
-  { value: "germany", label: "Germany" },
-  { value: "france", label: "France" },
-  { value: "netherlands", label: "Netherlands" },
+  { value: "Australia", label: "Australia" },
+  { value: "United Kingdom", label: "United Kingdom" },
+  { value: "United States", label: "United States" },
+  { value: "Canada", label: "Canada" },
+  { value: "Germany", label: "Germany" },
+  { value: "France", label: "France" },
+  { value: "Netherlands", label: "Netherlands" },
   { value: "other", label: "Other" },
 ];
 
@@ -79,10 +79,52 @@ export default function FinduniversityForm() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log("Form submitted:", formData);
-    // Add your form submission logic here
-    alert("Form submitted successfully!");
+  const handleSubmit = async () => {
+    try {
+      // Map frontend study level values to database values
+      const levelMapping: { [key: string]: string } = {
+        'bachelors': 'Undergraduate',
+        'masters': 'Graduate',
+        'mba': 'Undergraduate',
+        'phd': 'PhD'
+      };
+
+      const mappedFormData = {
+        ...formData,
+        studyLevel: levelMapping[formData.studyLevel] || formData.studyLevel
+      };
+
+      const response = await fetch("/api/university-search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(mappedFormData),
+      });
+
+      const result = await response.json();
+      console.log("Search results:", result);
+
+      // Redirect to find-universities page with search criteria
+      const params = new URLSearchParams();
+      if (formData.location && formData.location !== 'other') {
+        params.set('country', formData.location);
+      }
+      if (formData.subject) {
+        params.set('program', formData.subject);
+      }
+      if (formData.studyLevel) {
+        params.set('level', formData.studyLevel);
+      }
+      if (formData.session) {
+        params.set('session', formData.session);
+      }
+      
+      window.location.href = `/find-universities?${params.toString()}`;
+    } catch (error) {
+      console.error("Error submitting search:", error);
+      alert("Error processing your search. Please try again.");
+    }
   };
 
   const isStepValid = () => {
@@ -105,7 +147,7 @@ export default function FinduniversityForm() {
       case 1:
         return (
           <div className="space-y-4">
-            <label className="block text-base font-semibold text-primary-foreground sm:text-lg">
+            <label className="block text-base font-semibold text-white sm:text-lg">
               Select Study Level
             </label>
             <select
@@ -126,7 +168,7 @@ export default function FinduniversityForm() {
       case 2:
         return (
           <div className="space-y-4">
-            <label className="block text-base font-semibold text-primary-foreground sm:text-lg">
+            <label className="block text-base font-semibold text-white sm:text-lg">
               Select Subject
             </label>
             <select
@@ -147,7 +189,7 @@ export default function FinduniversityForm() {
       case 3:
         return (
           <div className="space-y-4">
-            <label className="block text-base font-semibold text-primary-foreground sm:text-lg">
+            <label className="block text-base font-semibold text-white sm:text-lg">
               Select Location
             </label>
             <select
@@ -168,7 +210,7 @@ export default function FinduniversityForm() {
       case 4:
         return (
           <div className="space-y-4">
-            <label className="block text-base font-semibold text-primary-foreground sm:text-lg">
+            <label className="block text-base font-semibold text-white sm:text-lg">
               Select Session
             </label>
             <select
@@ -192,11 +234,11 @@ export default function FinduniversityForm() {
   };
 
   return (
-    <div className="w-full max-w-2xl rounded-2xl bg-card/10 p-8 backdrop-blur-md shadow-xl sm:p-10">
+    <div className="w-full max-w-4xl mx-auto rounded-2xl bg-white/20 p-8 backdrop-blur-2xl shadow-2xl sm:p-10 border border-white/30">
       {/* Progress Indicator */}
       <div className="mb-8">
         <div className="mb-3 flex items-center justify-between">
-          <p className="text-sm font-semibold text-muted-foreground sm:text-base">
+          <p className="text-sm font-semibold text-white sm:text-base">
             Step {currentStep} of {TOTAL_STEPS}
           </p>
           <div className="flex gap-1.5">
@@ -206,16 +248,16 @@ export default function FinduniversityForm() {
                 className={cn(
                   "h-2.5 w-10 rounded-full transition-all duration-300",
                   index + 1 <= currentStep
-                    ? "bg-primary shadow-sm"
-                    : "bg-card/20"
+                    ? "bg-primary shadow-lg"
+                    : "bg-white/30"
                 )}
               />
             ))}
           </div>
         </div>
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-card/20">
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/30">
           <div
-            className="h-full bg-primary transition-all duration-500 ease-out shadow-sm"
+            className="h-full bg-primary transition-all duration-500 ease-out shadow-lg"
             style={{ width: `${(currentStep / TOTAL_STEPS) * 100}%` }}
           />
         </div>
@@ -230,7 +272,7 @@ export default function FinduniversityForm() {
           variant="ghost"
           onClick={handleBack}
           disabled={currentStep === 1}
-          className="text-primary-foreground hover:bg-card/20 hover:text-primary-foreground disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+          className="text-white hover:bg-white/20 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
         >
           <MoveLeft className="h-4 w-4" />
           <span className="font-medium">Back</span>
@@ -240,7 +282,7 @@ export default function FinduniversityForm() {
           variant="default"
           onClick={handleNext}
           disabled={!isStepValid()}
-          className="bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all font-semibold px-6"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transition-all font-semibold px-6"
         >
           {currentStep === TOTAL_STEPS ? (
             <>

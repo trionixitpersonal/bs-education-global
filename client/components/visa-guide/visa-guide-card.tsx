@@ -68,10 +68,17 @@ export function VisaGuideCard({ guide }: VisaGuideCardProps) {
       </div>
 
       <Button asChild className="mt-auto w-full" variant="outline">
-        <Link href={`/visa-guide/${guide.id}`}>
-          View Full Guide
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Link>
+        {guide.guideLink ? (
+          <a href={guide.guideLink} target="_blank" rel="noopener noreferrer">
+            View Full Guide
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </a>
+        ) : (
+          <Link href={`/visa-guide/${guide.id}`}>
+            View Full Guide
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+        )}
       </Button>
     </div>
   );

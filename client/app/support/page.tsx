@@ -1,4 +1,4 @@
-import { getSupportOptions, getFAQs } from "@/lib/mock-data/support-data";
+import { getSupportOptions } from "@/lib/mock-data/support-data";
 import { SupportOptionCard } from "@/components/support/support-option-card";
 import { FAQAccordion } from "@/components/support/faq-accordion";
 
@@ -8,6 +8,21 @@ export const metadata = {
     "Get help with your study abroad journey. Contact our support team, browse FAQs, or book a consultation.",
 };
 
+async function getFAQs() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/faqs/public`, {
+      cache: 'no-store'
+    });
+    if (response.ok) {
+      return await response.json();
+    }
+    return [];
+  } catch (error) {
+    console.error('Error fetching FAQs:', error);
+    return [];
+  }
+}
+
 export default async function SupportPage() {
   const [supportOptions, faqs] = await Promise.all([
     getSupportOptions(),
@@ -15,7 +30,7 @@ export default async function SupportPage() {
   ]);
 
   return (
-    <main className="w-full overflow-x-hidden">
+    <main className="w-full overflow-x-hidden pt-24 lg:pt-28">
       <section className="w-full bg-background py-12 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">

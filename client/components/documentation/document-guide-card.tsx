@@ -1,14 +1,25 @@
+"use client";
+
 import { DocumentGuide } from "@/lib/mock-data/types";
 import { Button } from "@/components/ui/button";
 import { FileText, CheckCircle2, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { DocumentationDetailsDialog } from "./documentation-details-dialog";
+import { useState } from "react";
 
 interface DocumentGuideCardProps {
   guide: DocumentGuide;
 }
 
 export function DocumentGuideCard({ guide }: DocumentGuideCardProps) {
+  const [open, setOpen] = useState(false);
+
   return (
+    <>
+      <DocumentationDetailsDialog
+        guide={guide}
+        open={open}
+        onOpenChange={setOpen}
+      />
     <div className="group relative flex flex-col rounded-lg border border-border bg-card p-6 shadow-sm transition-all hover:shadow-md">
       <div className="mb-4">
         <h3 className="mb-2 text-xl font-semibold leading-tight">
@@ -55,12 +66,15 @@ export function DocumentGuideCard({ guide }: DocumentGuideCardProps) {
         </div>
       )}
 
-      <Button asChild className="mt-auto w-full" variant="outline">
-        <Link href={`/documentation/${guide.id}`}>
-          View Full Guide
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Link>
+      <Button
+        onClick={() => setOpen(true)}
+        className="mt-auto w-full"
+        variant="outline"
+      >
+        View Full Guide
+        <ArrowRight className="ml-2 h-4 w-4" />
       </Button>
     </div>
+    </>
   );
 }

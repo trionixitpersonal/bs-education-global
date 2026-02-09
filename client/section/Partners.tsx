@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 // Import Swiper styles
 import "swiper/css";
@@ -55,6 +56,15 @@ export default function Partners({
 }: PartnersProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [itemsPerSlide, setItemsPerSlide] = useState(12);
+  const ref = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
 
   // Calculate items per slide based on viewport
   useEffect(() => {
@@ -89,17 +99,23 @@ export default function Partners({
   }
 
   return (
-    <section className="w-full bg-muted py-20 lg:py-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={ref} className="relative w-full overflow-hidden bg-gray-50 py-48 lg:py-64">
+      <motion.div style={{ y, opacity }} className="container relative mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
-        <div className="mb-16 text-center lg:mb-20">
-          <h2 className="text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">
-            Over 650 global partner universities
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-32 text-center lg:mb-40"
+        >
+          <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+            Partner Universities
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
-            Trusted by leading institutions worldwide
+          <p className="mt-8 text-xl text-gray-600 font-light">
+            650+ global institutions
           </p>
-        </div>
+        </motion.div>
 
         {/* Logo Grid Carousel */}
         {slides.length > 0 && (
@@ -141,23 +157,27 @@ export default function Partners({
             >
               {slides.map((slideUniversities, slideIndex) => (
                 <SwiperSlide key={slideIndex}>
-                  <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+                  <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
                     {slideUniversities.map((university) => (
-                      <div
+                      <motion.div
                         key={university.id}
-                        className="group flex h-36 items-center justify-center rounded-xl border-2 border-border bg-card p-6 shadow-sm transition-all hover:border-primary hover:shadow-lg sm:h-40 lg:h-44"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="relative flex h-40 items-center justify-center overflow-hidden bg-white p-8 transition-all hover:bg-gray-50 sm:h-44 lg:h-48"
                       >
                         <div className="relative h-full w-full">
                           <Image
                             src={university.logo}
                             alt={university.name}
                             fill
-                            className="object-contain transition-transform group-hover:scale-105"
+                            className="object-contain grayscale hover:grayscale-0 transition-all duration-500"
                             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                             loading="lazy"
                           />
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
                     {/* Fill empty slots to maintain grid layout */}
                     {slideUniversities.length < itemsPerSlide &&
@@ -166,7 +186,7 @@ export default function Partners({
                       }).map((_, index) => (
                         <div
                           key={`empty-${index}`}
-                          className="h-36 sm:h-40 lg:h-44"
+                          className="h-40 sm:h-44 lg:h-48"
                           aria-hidden="true"
                         />
                       ))}
@@ -176,7 +196,7 @@ export default function Partners({
             </Swiper>
           </div>
         )}
-      </div>
+      </motion.div>
     </section>
   );
 }

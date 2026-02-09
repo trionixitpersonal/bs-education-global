@@ -4,7 +4,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-export function DestinationFilters() {
+interface DestinationFiltersProps {
+  onFilterChange: (filters: { country: string | null }) => void;
+}
+
+export function DestinationFilters({ onFilterChange }: DestinationFiltersProps) {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   const countries = [
@@ -20,6 +24,7 @@ export function DestinationFilters() {
 
   const clearFilters = () => {
     setSelectedCountry(null);
+    onFilterChange({ country: null });
   };
 
   const hasActiveFilters = selectedCountry;
@@ -36,11 +41,11 @@ export function DestinationFilters() {
               key={country}
               variant={selectedCountry === country ? "default" : "outline"}
               size="sm"
-              onClick={() =>
-                setSelectedCountry(
-                  selectedCountry === country ? null : country
-                )
-              }
+              onClick={() => {
+                const newCountry = selectedCountry === country ? null : country;
+                setSelectedCountry(newCountry);
+                onFilterChange({ country: newCountry });
+              }}
             >
               {country}
             </Button>
