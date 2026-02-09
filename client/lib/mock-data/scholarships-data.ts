@@ -26,7 +26,7 @@ export async function getScholarshipsData(): Promise<Scholarship[]> {
       university: "Multiple Universities",
       level: "Graduate",
       category: "Government",
-      applicationLink: "#apply-fulbright",
+      application_link: "#apply-fulbright",
     },
     {
       id: "2",
@@ -45,7 +45,7 @@ export async function getScholarshipsData(): Promise<Scholarship[]> {
       university: "Multiple Universities",
       level: "Graduate",
       category: "Government",
-      applicationLink: "#apply-chevening",
+      application_link: "#apply-chevening",
     },
     {
       id: "3",
@@ -64,7 +64,7 @@ export async function getScholarshipsData(): Promise<Scholarship[]> {
       university: "Multiple Universities",
       level: "All",
       category: "Government",
-      applicationLink: "#apply-australia",
+      application_link: "#apply-australia",
     },
     {
       id: "4",
@@ -83,7 +83,7 @@ export async function getScholarshipsData(): Promise<Scholarship[]> {
       university: "Multiple Universities",
       level: "PhD",
       category: "Government",
-      applicationLink: "#apply-vanier",
+      application_link: "#apply-vanier",
     },
     {
       id: "5",
@@ -102,7 +102,7 @@ export async function getScholarshipsData(): Promise<Scholarship[]> {
       university: "European Universities",
       level: "Graduate",
       category: "EU Program",
-      applicationLink: "#apply-erasmus",
+      application_link: "#apply-erasmus",
     },
     {
       id: "6",
@@ -121,7 +121,7 @@ export async function getScholarshipsData(): Promise<Scholarship[]> {
       university: "University of Oxford",
       level: "Graduate",
       category: "Private",
-      applicationLink: "#apply-rhodes",
+      application_link: "#apply-rhodes",
     },
     {
       id: "7",
@@ -140,7 +140,7 @@ export async function getScholarshipsData(): Promise<Scholarship[]> {
       university: "University of Cambridge",
       level: "Graduate",
       category: "Private",
-      applicationLink: "#apply-gates",
+      application_link: "#apply-gates",
     },
     {
       id: "8",
@@ -159,7 +159,7 @@ export async function getScholarshipsData(): Promise<Scholarship[]> {
       university: "Swiss Universities",
       level: "PhD",
       category: "Government",
-      applicationLink: "#apply-swiss",
+      application_link: "#apply-swiss",
     },
   ];
 }
