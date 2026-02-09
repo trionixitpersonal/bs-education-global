@@ -37,7 +37,7 @@ export interface Resource {
   link: string;
   readTime?: string;
   tags: string[];
-  publishedAt: string;
+  publishedAt?: string;
 }
 
 export interface SupportOption {
