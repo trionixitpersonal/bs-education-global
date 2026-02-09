@@ -1,0 +1,118 @@
+==================================================================
+BS EDU - QUICK DEPLOYMENT COMMANDS
+Copy and paste these commands into your VPS terminal after SSH login
+==================================================================
+
+# STEP 1: System Update and Install Node.js
+apt update && apt upgrade -y
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt install -y nodejs git nginx
+
+# STEP 2: Install PM2
+npm install -g pm2
+pm2 startup systemd -u root --hp /root
+
+# STEP 3: Clone Repository
+cd /var/www
+git clone https://github.com/clickbitDev/bs-edu.git
+cd bs-edu/client
+
+# STEP 4: Create Environment File
+cat > .env.local << 'EOF'
+# Supabase Configuration (REPLACE WITH YOUR ACTUAL VALUES!)
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
+
+# NextAuth Configuration
+NEXTAUTH_URL=http://72.60.192.200
+NEXTAUTH_SECRET=replace_with_random_secret_key
+
+# Application Configuration
+NODE_ENV=production
+EOF
+
+# IMPORTANT: Edit the environment file with your actual Supabase credentials
+echo "⚠️  EDIT .env.local NOW - Press any key to continue..."
+read -n 1
+nano .env.local
+
+# Generate a random secret for NextAuth (copy this value)
+echo "Your NextAuth Secret (copy this):"
+openssl rand -base64 32
+
+# STEP 5: Install Dependencies and Build
+npm install
+npm run build
+
+# STEP 6: Start Application with PM2
+pm2 start npm --name "bs-edu" -- start
+pm2 save
+
+# STEP 7: Configure Nginx
+cat > /etc/nginx/sites-available/bs-edu << 'EOF'
+server {
+    listen 80;
+    server_name 72.60.192.200;
+
+    client_max_body_size 10M;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+EOF
+
+ln -sf /etc/nginx/sites-available/bs-edu /etc/nginx/sites-enabled/
+rm -f /etc/nginx/sites-enabled/default
+nginx -t
+systemctl reload nginx
+
+# STEP 8: Configure Firewall
+ufw allow 22/tcp
+ufw allow 80/tcp
+ufw allow 443/tcp
+echo "y" | ufw enable
+
+# STEP 9: Verify Deployment
+echo ""
+echo "=========================================="
+echo "✅ DEPLOYMENT COMPLETE!"
+echo "=========================================="
+echo ""
+echo "Your application is now running at:"
+echo "http://72.60.192.200"
+echo ""
+echo "Useful PM2 Commands:"
+echo "  pm2 status         - Check app status"
+echo "  pm2 logs bs-edu    - View logs"
+echo "  pm2 restart bs-edu - Restart app"
+echo "  pm2 monit          - Monitor resources"
+echo ""
+
+# Show current status
+pm2 status
+
+==================================================================
+SUPABASE SETUP REQUIRED:
+==================================================================
+
+After deployment, you need to run these SQL scripts in Supabase:
+
+1. client/lib/supabase/schema.sql
+2. client/lib/supabase/user-dashboard-schema.sql
+3. client/lib/supabase/setup-contact-forms.sql
+4. client/lib/supabase/setup-storage.sql
+5. client/lib/supabase/seed-faqs.sql
+
+Go to: Supabase Dashboard → SQL Editor → Paste and run each script
+
+==================================================================
