@@ -11,10 +11,12 @@ interface Scholarship {
   description: string;
   amount: string;
   deadline: string;
+  eligibility?: string[];
   country: string;
   university: string;
   level: string;
   category: string;
+  application_link?: string;
   is_active: boolean;
 }
 
