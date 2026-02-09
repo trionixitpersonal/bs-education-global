@@ -75,14 +75,14 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
       <div className="mt-auto flex items-center justify-between">
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
-          {resource.readTime && (
+          {resource.read_time && (
             <div className="flex items-center gap-1">
               <Clock className="h-3 w-3" />
-              <span>{resource.readTime}</span>
+              <span>{resource.read_time}</span>
             </div>
           )}
           <span>
-            {new Date(resource.publishedAt).toLocaleDateString("en-US", {
+            {new Date(resource.published_at || new Date()).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
               year: "numeric",

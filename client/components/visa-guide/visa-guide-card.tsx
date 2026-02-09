@@ -17,10 +17,10 @@ export function VisaGuideCard({ guide }: VisaGuideCardProps) {
   return (
     <div className="group relative flex flex-col rounded-lg border border-border bg-card p-6 shadow-sm transition-all hover:shadow-md">
       <div className="mb-4 flex items-center gap-3">
-        <span className="text-4xl">{guide.flag}</span>
+        <span className="text-4xl">{guide.flag_emoji}</span>
         <div>
           <h3 className="text-xl font-semibold">{guide.country}</h3>
-          <p className="text-sm text-muted-foreground">{guide.visaType}</p>
+          <p className="text-sm text-muted-foreground">{guide.visa_type}</p>
         </div>
       </div>
 
@@ -32,7 +32,7 @@ export function VisaGuideCard({ guide }: VisaGuideCardProps) {
         <div className="flex items-center gap-2 text-sm">
           <Clock className="h-4 w-4 text-muted-foreground" />
           <span className="text-muted-foreground">Processing:</span>
-          <span className="font-medium">{guide.processingTime}</span>
+          <span className="font-medium">{guide.processing_time}</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
           <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -68,8 +68,8 @@ export function VisaGuideCard({ guide }: VisaGuideCardProps) {
       </div>
 
       <Button asChild className="mt-auto w-full" variant="outline">
-        {guide.guideLink ? (
-          <a href={guide.guideLink} target="_blank" rel="noopener noreferrer">
+        {guide.guide_link ? (
+          <a href={guide.guide_link} target="_blank" rel="noopener noreferrer">
             View Full Guide
             <ArrowRight className="ml-2 h-4 w-4" />
           </a>

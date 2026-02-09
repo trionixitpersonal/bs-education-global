@@ -12,7 +12,7 @@ interface Resource {
   link: string;
   read_time?: string;
   tags: string[];
-  published_at: string;
+  published_at?: string;
 }
 
 export default function ResourcesPage() {
@@ -25,19 +25,7 @@ export default function ResourcesPage() {
         const response = await fetch("/api/resources");
         const data = await response.json();
         
-        // Map database fields to match component's expected format
-        const mappedData = data.map((resource: any) => ({
-          id: resource.id,
-          title: resource.title,
-          description: resource.description,
-          category: resource.category,
-          link: resource.link,
-          readTime: resource.read_time,
-          tags: resource.tags || [],
-          publishedAt: resource.published_at,
-        }));
-        
-        setResources(mappedData);
+        setResources(data || []);
       } catch (error) {
         console.error("Failed to fetch resources:", error);
       } finally {

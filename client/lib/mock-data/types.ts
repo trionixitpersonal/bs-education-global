@@ -8,25 +8,26 @@ export interface Scholarship {
   description: string;
   amount: string;
   deadline: string;
-  eligibility: string[];
+  eligibility?: string[];
   country: string;
   university: string;
   level: "Undergraduate" | "Graduate" | "PhD" | "All";
   category: string;
-  applicationLink: string;
+  application_link?: string;
+  is_active?: boolean;
 }
 
 export interface VisaGuide {
   id: string;
   country: string;
-  flag: string;
-  visaType: string;
+  flag_emoji: string;
+  visa_type: string;
   requirements: string[];
-  processingTime: string;
+  processing_time: string;
   cost: string;
   documents: string[];
   description: string;
-  guideLink?: string;
+  guide_link?: string;
 }
 
 export interface Resource {
@@ -35,9 +36,11 @@ export interface Resource {
   description: string;
   category: "Guide" | "Article" | "Video" | "Tool" | "Template";
   link: string;
-  readTime?: string;
+  file_url?: string;
+  read_time?: string;
   tags: string[];
-  publishedAt?: string;
+  published_at?: string;
+  created_at?: string;
 }
 
 export interface SupportOption {
