@@ -20,7 +20,7 @@ export default function DocumentationAdminPage() {
   const [guides, setGuides] = useState<DocumentGuide[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingGuide, setEditingGuide] = useState<DocumentGuide | undefined>(undefined);
+  const [editingGuide, setEditingGuide] = useState<DocumentGuide | null>(null);
 
   const fetchGuides = async () => {
     try {
@@ -45,7 +45,7 @@ export default function DocumentationAdminPage() {
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
-    setEditingGuide(undefined);
+    setEditingGuide(null);
     fetchGuides();
   };
 
