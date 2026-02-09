@@ -79,9 +79,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate zip file
-    const zipBlob = await zip.generateAsync({ type: "uint8array" });
+    const zipBlob = await zip.generateAsync({ type: "blob" });
     
-    return new NextResponse(zipBlob, {
+    // Convert blob to array buffer for NextResponse
+    const arrayBuffer = await zipBlob.arrayBuffer();
+    
+    return new NextResponse(arrayBuffer, {
       headers: {
         'Content-Type': 'application/zip',
         'Content-Disposition': 'attachment; filename="documents.zip"'
