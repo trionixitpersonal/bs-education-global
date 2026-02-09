@@ -20,7 +20,7 @@ export default function RankingsAdminPage() {
   const [rankings, setRankings] = useState<Ranking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingRanking, setEditingRanking] = useState<Ranking | undefined>(undefined);
+  const [editingRanking, setEditingRanking] = useState<Ranking | null>(null);
 
   const fetchRankings = async () => {
     try {
@@ -45,7 +45,7 @@ export default function RankingsAdminPage() {
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
-    setEditingRanking(undefined);
+    setEditingRanking(null);
     fetchRankings();
   };
 

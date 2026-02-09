@@ -18,7 +18,7 @@ export default function FAQsAdminPage() {
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingFAQ, setEditingFAQ] = useState<FAQ | undefined>(undefined);
+  const [editingFAQ, setEditingFAQ] = useState<FAQ | null>(null);
 
   const fetchFAQs = async () => {
     try {
@@ -43,7 +43,7 @@ export default function FAQsAdminPage() {
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
-    setEditingFAQ(undefined);
+    setEditingFAQ(null);
     fetchFAQs();
   };
 

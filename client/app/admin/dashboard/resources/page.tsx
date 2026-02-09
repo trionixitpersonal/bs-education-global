@@ -21,7 +21,7 @@ export default function ResourcesAdminPage() {
   const [resources, setResources] = useState<Resource[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingResource, setEditingResource] = useState<Resource | undefined>(undefined);
+  const [editingResource, setEditingResource] = useState<Resource | null>(null);
 
   const fetchResources = async () => {
     try {
@@ -46,7 +46,7 @@ export default function ResourcesAdminPage() {
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
-    setEditingResource(undefined);
+    setEditingResource(null);
     fetchResources();
   };
 

@@ -22,7 +22,7 @@ export default function VisaGuidesAdminPage() {
   const [guides, setGuides] = useState<VisaGuide[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingVisaGuide, setEditingVisaGuide] = useState<VisaGuide | undefined>(undefined);
+  const [editingVisaGuide, setEditingVisaGuide] = useState<VisaGuide | null>(null);
 
   const fetchGuides = async () => {
     try {
@@ -47,7 +47,7 @@ export default function VisaGuidesAdminPage() {
 
   const handleDialogClose = () => {
     setIsDialogOpen(false);
-    setEditingVisaGuide(undefined);
+    setEditingVisaGuide(null);
     fetchGuides();
   };
 
