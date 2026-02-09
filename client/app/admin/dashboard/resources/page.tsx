@@ -11,6 +11,7 @@ interface Resource {
   description: string;
   category: string;
   link: string;
+  file_url?: string;
   read_time?: string;
   tags?: string[];
   published_at?: string;
