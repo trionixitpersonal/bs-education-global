@@ -10,7 +10,7 @@ interface Scholarship {
   description: string;
   amount: string;
   deadline: string;
-  eligibility: string[];
+  eligibility?: string[];
   country: string;
   university: string;
   level: string;
@@ -59,7 +59,7 @@ export function ScholarshipDialog({ scholarship, onClose }: Props) {
   useEffect(() => {
     if (scholarship) {
       setFormData(scholarship);
-      setEligibilityInput(scholarship.eligibility.join("\n"));
+      setEligibilityInput(scholarship.eligibility?.join("\n") || "");
     }
   }, [scholarship]);
 
