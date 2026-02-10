@@ -101,7 +101,7 @@ export default async function UniversityDetailsPage({
                   <DollarSign className="h-5 w-5 text-muted-foreground" />
                   <div>
                     <p className="text-sm text-muted-foreground">Tuition Range</p>
-                    <p className="font-medium">{university.tuition || university.tuition_range || "Contact for details"}</p>
+                    <p className="font-medium">{university?.tuition || university?.tuition_range || "Contact for details"}</p>
                   </div>
                 </div>
 

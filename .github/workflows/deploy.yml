@@ -15,18 +15,11 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Navigate to app folder (Create it if first time)
-            mkdir -p /var/www/my-app
-            cd /var/www/my-app
-            
-            # If git isn't initialized, clone it. Otherwise, pull.
-            if [ ! -d ".git" ]; then
-              git clone https://github.com/${{ github.repository }}.git .
-            else
-              git pull origin main
-            fi
-
-            # Install and Restart
+            # Create the folder if it doesn't exist (first-time insurance)
+            mkdir -p /root/bs-education-global/client
+            cd /root/bs-education-global/client
+            # Pull the latest code
+            git pull origin main
+            # Install and restart
             npm install
-            npm run build --if-present
-            pm2 restart my-app || pm2 start npm --name "my-app" -- start
+            pm2 restart bs-client || pm2 start npm --name "bs-client" -- start

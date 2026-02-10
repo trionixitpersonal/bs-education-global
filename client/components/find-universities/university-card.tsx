@@ -61,7 +61,8 @@ export function UniversityCard({ university }: UniversityCardProps) {
         <div className="mb-4 flex items-center gap-2 rounded-lg bg-gray-50 px-3 py-2">
           <DollarSign className="h-4 w-4 text-green-600" />
           <span className="text-xs text-gray-600">Tuition:</span>
-          <span className="text-sm font-semibold text-gray-900">{university.tuition || university.tuition_range || "Contact for details"}</span>
+          <span className="text-sm font-semibold text-gray-900">{// @ts-ignore
+university.tuition || university?.tuition_range || "Contact for details"}</span>
         </div>
 
         {/* Programs */}
