@@ -13,6 +13,7 @@ export default function FindUniversitiesPage() {
   const [programs, setPrograms] = useState<any[]>([]);
   const [filteredUniversities, setFilteredUniversities] = useState<University[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState({
     searchQuery: "",
     country: null as string | null,
@@ -22,23 +23,28 @@ export default function FindUniversitiesPage() {
   useEffect(() => {
     async function fetchData() {
       try {
+        setError(null);
         const [universitiesRes, programsRes] = await Promise.all([
           fetch('/api/universities', { cache: 'no-store' }),
           fetch('/api/programs', { cache: 'no-store' })
         ]);
         
-        if (universitiesRes.ok) {
-          const universityData = await universitiesRes.json();
-          setUniversities(universityData || []);
-          setFilteredUniversities(universityData || []);
+        if (!universitiesRes.ok && universitiesRes.status !== 200) {
+          throw new Error(`Failed to fetch universities: ${universitiesRes.statusText}`);
+        }
+        if (!programsRes.ok && programsRes.status !== 200) {
+          throw new Error(`Failed to fetch programs: ${programsRes.statusText}`);
         }
 
-        if (programsRes.ok) {
-          const programData = await programsRes.json();
-          setPrograms(programData || []);
-        }
+        const universityData = universitiesRes.ok ? await universitiesRes.json() : [];
+        const programData = programsRes.ok ? await programsRes.json() : [];
+        
+        setUniversities(universityData || []);
+        setFilteredUniversities(universityData || []);
+        setPrograms(programData || []);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError(error instanceof Error ? error.message : "Error processing your search. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -162,6 +168,17 @@ export default function FindUniversitiesPage() {
       {/* Results Section */}
       <section className="bg-white py-12 lg:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
+          {error && (
+            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
+              <p className="text-sm text-red-800">
+                <strong>Error:</strong> {error}
+              </p>
+              <p className="mt-2 text-xs text-red-700">
+                Please check your internet connection and try refreshing the page.
+              </p>
+            </div>
+          )}
 
           {/* Results Header */}
           <div className="mb-8 flex items-center justify-between">

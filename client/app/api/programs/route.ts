@@ -3,6 +3,11 @@ import { supabaseAdmin } from "@/lib/supabase/client";
 
 export async function GET() {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.error("Missing Supabase configuration");
+      return NextResponse.json([], { status: 200 });
+    }
+
     const { data, error } = await supabaseAdmin
       .from("programs")
       .select(`
@@ -16,7 +21,7 @@ export async function GET() {
 
     if (error) {
       console.error("Supabase error:", error);
-      return NextResponse.json([], { status: 500 });
+      return NextResponse.json([], { status: 200 });
     }
 
     // Transform the data to match the expected format
@@ -32,10 +37,10 @@ export async function GET() {
       university_id: program.university_id,
     }));
 
-    return NextResponse.json(transformedData);
+    return NextResponse.json(transformedData, { status: 200 });
   } catch (error) {
     console.error("Failed to fetch programs:", error);
-    return NextResponse.json([], { status: 500 });
+    return NextResponse.json([], { status: 200 });
   }
 }
 

@@ -3,6 +3,11 @@ import { supabaseAdmin } from "@/lib/supabase/client";
 
 export async function GET() {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.error("Missing Supabase configuration");
+      return NextResponse.json([], { status: 200 });
+    }
+
     const { data, error } = await supabaseAdmin
       .from("universities")
       .select("*")
@@ -10,13 +15,13 @@ export async function GET() {
 
     if (error) {
       console.error("Supabase error:", error);
-      return NextResponse.json([]);
+      return NextResponse.json([], { status: 200 });
     }
 
-    return NextResponse.json(data || []);
+    return NextResponse.json(data || [], { status: 200 });
   } catch (error) {
     console.error("Failed to fetch universities:", error);
-    return NextResponse.json([]);
+    return NextResponse.json([], { status: 200 });
   }
 }
 
