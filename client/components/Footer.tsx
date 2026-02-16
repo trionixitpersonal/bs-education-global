@@ -76,24 +76,24 @@ export default function Footer() {
                 <div className="flex items-center gap-2.5">
                   <Mail className="h-4 w-4 text-muted-foreground" />
                   <a
-                    href="mailto:info@bsedu.com"
+                    href="mailto:enquiry@bsedu.com.au"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    info@bsedu.com
+                    enquiry@bsedu.com.au
                   </a>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <Phone className="h-4 w-4 text-muted-foreground" />
                   <a
-                    href="tel:+1234567890"
+                    href="tel:+611300598410"
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    +1 (234) 567-890
+                    +61 1300 598 410
                   </a>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">123 Education Street, City, Country</span>
+                  <span className="text-muted-foreground">Suite 11A, 41-45 Rickard Road, Bankstown, NSW, Australia, 2200</span>
                 </div>
               </div>
             </div>

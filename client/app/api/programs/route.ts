@@ -16,13 +16,26 @@ export async function GET() {
 
     if (error) {
       console.error("Supabase error:", error);
-      return NextResponse.json([]);
+      return NextResponse.json([], { status: 500 });
     }
 
-    return NextResponse.json(data || []);
+    // Transform the data to match the expected format
+    const transformedData = (data || []).map((program: any) => ({
+      id: program.id,
+      name: program.name,
+      university: program.universities?.name || "Unknown University",
+      level: program.level,
+      duration: program.duration,
+      tuition: program.tuition,
+      requirements: program.requirements || [],
+      description: program.description || "",
+      university_id: program.university_id,
+    }));
+
+    return NextResponse.json(transformedData);
   } catch (error) {
     console.error("Failed to fetch programs:", error);
-    return NextResponse.json([]);
+    return NextResponse.json([], { status: 500 });
   }
 }
 

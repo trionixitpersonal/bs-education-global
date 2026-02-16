@@ -14,10 +14,14 @@ export default function CompareProgramsPage() {
     async function loadPrograms() {
       try {
         const response = await fetch('/api/programs');
+        if (!response.ok) {
+          throw new Error(`Failed to load programs: ${response.status}`);
+        }
         const data = await response.json();
-        setPrograms(data);
+        setPrograms(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error loading programs:", error);
+        setPrograms([]);
       } finally {
         setLoading(false);
       }

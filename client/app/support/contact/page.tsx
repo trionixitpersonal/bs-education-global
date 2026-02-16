@@ -53,16 +53,16 @@ export default function ContactSupportPage() {
     {
       icon: Mail,
       title: "Email Support",
-      description: "support@bsedu.com.au",
+      description: "enquiry@bsedu.com.au",
       action: "Send Email",
-      link: "mailto:support@bsedu.com.au",
+      link: "mailto:enquiry@bsedu.com.au",
     },
     {
       icon: Phone,
       title: "Phone Support",
-      description: "+61 (0) 3 9999 9999",
+      description: "+61 1300 598 410",
       action: "Call Us",
-      link: "tel:+61399999999",
+      link: "tel:+611300598410",
     },
     {
       icon: MessageSquare,
@@ -201,8 +201,8 @@ export default function ContactSupportPage() {
                   <div className="flex items-start gap-3">
                     <MapPin className="mt-0.5 h-5 w-5 text-muted-foreground" />
                     <div className="text-sm">
-                      <p>123 Education Street</p>
-                      <p>Melbourne, VIC 3000</p>
+                      <p>Suite 11A, 41-45 Rickard Road</p>
+                      <p>Bankstown, NSW 2200</p>
                       <p>Australia</p>
                     </div>
                   </div>

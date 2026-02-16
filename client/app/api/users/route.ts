@@ -56,7 +56,8 @@ export async function POST(request: NextRequest) {
         id: authData.user.id,
         email,
         full_name,
-        role: role || "user"
+        role: role || "user",
+        is_approved: role === "admin" || role === "super_admin" // Auto-approve admin accounts
       })
       .select()
       .single();

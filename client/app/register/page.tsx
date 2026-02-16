@@ -48,8 +48,8 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Redirect to login page
-        router.push("/login?registered=true");
+        // Redirect to login page with pending approval message
+        router.push("/login?registered=true&pending=true");
       } else {
         setError(data.error || "Failed to create account");
       }

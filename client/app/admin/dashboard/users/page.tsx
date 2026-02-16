@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, Pencil, Trash2, X, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Loader2, Check } from "lucide-react";
 
 interface User {
   id: string;
@@ -10,6 +10,7 @@ interface User {
   full_name?: string;
   role: string;
   created_at: string;
+  is_approved?: boolean;
 }
 
 interface UserFormData {
@@ -25,6 +26,8 @@ export default function UsersAdminPage() {
   const [showDialog, setShowDialog] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [processingId, setProcessingId] = useState<string | null>(null);
+  const [filterTab, setFilterTab] = useState<"all" | "pending" | "approved">("all");
   const [formData, setFormData] = useState<UserFormData>({
     email: "",
     full_name: "",
@@ -35,8 +38,14 @@ export default function UsersAdminPage() {
   const fetchUsers = async () => {
     try {
       const response = await fetch("/api/users");
+      if (!response.ok) throw new Error("Failed to fetch users");
       const data = await response.json();
-      setUsers(data || []);
+      // Ensure is_approved field exists (default to true for admins/super_admins)
+      const processedData = (data || []).map((user: any) => ({
+        ...user,
+        is_approved: user.is_approved !== undefined ? user.is_approved : user.role !== 'user'
+      }));
+      setUsers(processedData);
     } catch (error) {
       console.error("Failed to fetch users:", error);
     } finally {
@@ -47,6 +56,18 @@ export default function UsersAdminPage() {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  const getFilteredUsers = () => {
+    if (filterTab === "pending") {
+      return users.filter(u => u.role === "user" && !u.is_approved);
+    }
+    if (filterTab === "approved") {
+      return users.filter(u => u.is_approved !== false);
+    }
+    return users;
+  };
+
+  const pendingCount = users.filter(u => u.role === "user" && !u.is_approved).length;
 
   const handleOpenDialog = (user?: User) => {
     if (user) {
@@ -126,6 +147,70 @@ export default function UsersAdminPage() {
     }
   };
 
+  const handleApprove = async (id: string) => {
+    setProcessingId(id);
+    try {
+      const response = await fetch("/api/admin/users", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: id, approved: true }),
+      });
+
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        let errorData = { error: "Failed to approve user" };
+        if (contentType?.includes("application/json")) {
+          errorData = await response.json();
+        }
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+      
+      const contentType = response.headers.get("content-type");
+      if (!contentType?.includes("application/json")) {
+        throw new Error("Invalid response from server");
+      }
+      
+      await fetchUsers();
+    } catch (error: any) {
+      console.error("Error approving user:", error);
+      alert(`Failed to approve user: ${error.message}`);
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  const handleReject = async (id: string) => {
+    setProcessingId(id);
+    try {
+      const response = await fetch("/api/admin/users", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: id, approved: false }),
+      });
+
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        let errorData = { error: "Failed to reject user" };
+        if (contentType?.includes("application/json")) {
+          errorData = await response.json();
+        }
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+      
+      const contentType = response.headers.get("content-type");
+      if (!contentType?.includes("application/json")) {
+        throw new Error("Invalid response from server");
+      }
+      
+      await fetchUsers();
+    } catch (error: any) {
+      console.error("Error rejecting user:", error);
+      alert(`Failed to reject user: ${error.message}`);
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-8">
@@ -133,6 +218,8 @@ export default function UsersAdminPage() {
       </div>
     );
   }
+
+  const filteredUsers = getFilteredUsers();
 
   return (
     <div className="space-y-6">
@@ -142,6 +229,47 @@ export default function UsersAdminPage() {
           <Plus className="h-4 w-4" />
           Add User
         </Button>
+      </div>
+
+      {/* Tabs */}
+      <div className="border-b border-gray-200">
+        <div className="flex gap-8">
+          <button
+            onClick={() => setFilterTab("all")}
+            className={`px-1 py-4 font-medium border-b-2 transition-colors ${
+              filterTab === "all"
+                ? "border-blue-600 text-gray-900"
+                : "border-transparent text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            All Users
+          </button>
+          <button
+            onClick={() => setFilterTab("pending")}
+            className={`px-1 py-4 font-medium border-b-2 transition-colors ${
+              filterTab === "pending"
+                ? "border-blue-600 text-gray-900"
+                : "border-transparent text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            Pending Approval
+            {pendingCount > 0 && (
+              <span className="ml-2 inline-flex items-center justify-center h-6 w-6 rounded-full bg-red-500 text-white text-xs font-semibold">
+                {pendingCount}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={() => setFilterTab("approved")}
+            className={`px-1 py-4 font-medium border-b-2 transition-colors ${
+              filterTab === "approved"
+                ? "border-blue-600 text-gray-900"
+                : "border-transparent text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            Approved Users
+          </button>
+        </div>
       </div>
 
       <div className="rounded-lg border bg-white shadow-sm">
@@ -159,6 +287,9 @@ export default function UsersAdminPage() {
                   Role
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                   Created
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">
@@ -167,14 +298,16 @@ export default function UsersAdminPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {users.length === 0 ? (
+              {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                    No users found. Click "Add User" to create one.
+                  <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                    {filterTab === "pending" && "No pending approvals"}
+                    {filterTab === "approved" && "No approved users"}
+                    {filterTab === "all" && "No users found. Click \"Add User\" to create one."}
                   </td>
                 </tr>
               ) : (
-                users.map((user) => (
+                filteredUsers.map((user) => (
                   <tr key={user.id} className="hover:bg-gray-50">
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="font-medium text-gray-900">{user.email}</div>
@@ -191,11 +324,56 @@ export default function UsersAdminPage() {
                         {user.role}
                       </span>
                     </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      {user.role === 'admin' || user.role === 'super_admin' ? (
+                        <span className="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
+                          ✓ Approved
+                        </span>
+                      ) : user.is_approved ? (
+                        <span className="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
+                          ✓ Approved
+                        </span>
+                      ) : (
+                        <span className="inline-flex rounded-full bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800">
+                          ⏳ Pending
+                        </span>
+                      )}
+                    </td>
                     <td className="whitespace-nowrap px-6 py-4 text-gray-500">
                       {new Date(user.created_at).toLocaleDateString()}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
+                        {user.role === 'user' && !user.is_approved && (
+                          <>
+                            <Button
+                              size="sm"
+                              onClick={() => handleApprove(user.id)}
+                              disabled={processingId === user.id}
+                              className="flex items-center gap-1 bg-green-600 hover:bg-green-700"
+                            >
+                              {processingId === user.id ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Check className="h-3 w-3" />
+                              )}
+                              Approve
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleReject(user.id)}
+                              disabled={processingId === user.id}
+                              className="flex items-center gap-1"
+                            >
+                              {processingId === user.id ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                "Deny"
+                              )}
+                            </Button>
+                          </>
+                        )}
                         <Button
                           variant="outline"
                           size="sm"

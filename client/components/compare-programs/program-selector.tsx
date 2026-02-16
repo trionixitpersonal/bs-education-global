@@ -24,8 +24,8 @@ export function ProgramSelector({
 
   const filteredPrograms = programs.filter(
     (p) =>
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.university.toLowerCase().includes(searchQuery.toLowerCase())
+      (p.name?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+      (p.university?.toLowerCase() || "").includes(searchQuery.toLowerCase())
   );
 
   const canAddMore = selectedPrograms.length < maxSelections;

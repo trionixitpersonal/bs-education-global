@@ -43,7 +43,7 @@ export function ProgramComparisonTable({
     {
       label: "Requirements",
       icon: FileText,
-      getValue: (p: Program) => `${p.requirements.length} items`,
+      getValue: (p: Program) => `${(p.requirements || []).length} items`,
     },
   ];
 
@@ -79,18 +79,20 @@ export function ProgramComparisonTable({
                   {field.label === "Requirements" ? (
                     <div className="space-y-1">
                       <span className="text-sm">{field.getValue(program)}</span>
-                      <details className="text-xs">
-                        <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
-                          View all
-                        </summary>
-                        <ul className="mt-2 space-y-1 pl-4">
-                          {program.requirements.map((req, reqIdx) => (
-                            <li key={reqIdx} className="list-disc text-muted-foreground">
-                              {req}
-                            </li>
-                          ))}
-                        </ul>
-                      </details>
+                      {(program.requirements || []).length > 0 && (
+                        <details className="text-xs">
+                          <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
+                            View all
+                          </summary>
+                          <ul className="mt-2 space-y-1 pl-4">
+                            {(program.requirements || []).map((req, reqIdx) => (
+                              <li key={reqIdx} className="list-disc text-muted-foreground">
+                                {req}
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      )}
                     </div>
                   ) : (
                     <span className="text-sm">{field.getValue(program)}</span>

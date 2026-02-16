@@ -17,7 +17,14 @@ function LoginForm() {
 
   useEffect(() => {
     if (searchParams.get("registered") === "true") {
-      setSuccessMessage("Account created successfully! Please sign in.");
+      if (searchParams.get("pending") === "true") {
+        setSuccessMessage("Account created successfully! Your account is pending admin approval. You'll be able to sign in once approved.");
+      } else {
+        setSuccessMessage("Account created successfully! Please sign in.");
+      }
+    }
+    if (searchParams.get("error") === "pending_approval") {
+      setError("Your account is pending admin approval. Please try again later.");
     }
   }, [searchParams]);
 
