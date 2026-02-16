@@ -5,8 +5,14 @@ import Link from "next/link";
 
 async function getUniversity(id: string) {
   try {
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_SITE_URL
+      ? process.env.NEXT_PUBLIC_SITE_URL
+      : 'http://localhost:3000';
+    
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/universities/${id}`,
+      `${baseUrl}/api/universities/${id}`,
       { cache: 'no-store' }
     );
     
@@ -23,8 +29,14 @@ async function getUniversity(id: string) {
 
 async function getUniversityPrograms(universityId: string) {
   try {
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_SITE_URL
+      ? process.env.NEXT_PUBLIC_SITE_URL
+      : 'http://localhost:3000';
+    
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/programs`,
+      `${baseUrl}/api/programs`,
       { cache: 'no-store' }
     );
     
