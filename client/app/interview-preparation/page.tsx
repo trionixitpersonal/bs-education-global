@@ -1,6 +1,8 @@
 import { InterviewTipCard } from "@/components/interview-preparation/interview-tip-card";
 import { getBaseUrl } from "@/lib/server-url";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Visa Interview Preparation | BS Education",
   description:

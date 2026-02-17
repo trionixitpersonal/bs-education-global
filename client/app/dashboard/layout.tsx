@@ -3,6 +3,8 @@ import { requireAuth } from "@/lib/auth/auth-utils";
 import { UserSidebar } from "@/components/dashboard/UserSidebar";
 import { UserHeader } from "@/components/dashboard/UserHeader";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardLayout({
   children,
 }: {

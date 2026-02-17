@@ -2,6 +2,8 @@ import { DocumentGuideCard } from "@/components/documentation/document-guide-car
 import { DocumentGuide } from "@/lib/mock-data/types";
 import { getBaseUrl } from "@/lib/server-url";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Documentation Support | BS Education",
   description:

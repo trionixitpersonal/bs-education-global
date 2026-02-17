@@ -1,6 +1,8 @@
 import { PostArrivalCard } from "@/components/post-arrival-support/post-arrival-card";
 import { getBaseUrl } from "@/lib/server-url";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Post Arrival Support | BS Education",
   description:

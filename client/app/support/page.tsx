@@ -2,6 +2,8 @@ import { getSupportOptions } from "@/lib/mock-data/support-data";
 import { SupportOptionCard } from "@/components/support/support-option-card";
 import { FAQAccordion } from "@/components/support/faq-accordion";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Support | BS Education",
   description:

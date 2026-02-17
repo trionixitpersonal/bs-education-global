@@ -1,6 +1,8 @@
 import { CountryRequirementCard } from "@/components/country-requirements/country-requirement-card";
 import { getBaseUrl } from "@/lib/server-url";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Country Specific Requirements | BS Education",
   description:
