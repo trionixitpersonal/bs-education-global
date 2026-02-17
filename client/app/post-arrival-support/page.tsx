@@ -1,4 +1,5 @@
 import { PostArrivalCard } from "@/components/post-arrival-support/post-arrival-card";
+import { getBaseUrl } from "@/lib/server-url";
 
 export const metadata = {
   title: "Post Arrival Support | BS Education",
@@ -20,12 +21,9 @@ interface PostArrivalSupport {
 
 async function getPostArrivalSupport() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/post-arrival-support`,
-      {
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`${getBaseUrl()}/api/post-arrival-support`, {
+      cache: "no-store",
+    });
 
     if (!res.ok) {
       console.error("Failed to fetch post arrival support");

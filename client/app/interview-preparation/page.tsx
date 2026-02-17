@@ -1,4 +1,5 @@
 import { InterviewTipCard } from "@/components/interview-preparation/interview-tip-card";
+import { getBaseUrl } from "@/lib/server-url";
 
 export const metadata = {
   title: "Visa Interview Preparation | BS Education",
@@ -20,12 +21,9 @@ interface InterviewTip {
 
 async function getInterviewPreparation() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/interview-preparation`,
-      {
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`${getBaseUrl()}/api/interview-preparation`, {
+      cache: "no-store",
+    });
 
     if (!res.ok) {
       console.error("Failed to fetch interview preparation");

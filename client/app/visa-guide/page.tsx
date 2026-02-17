@@ -2,19 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { VisaGuideCard } from "@/components/visa-guide/visa-guide-card";
-
-interface VisaGuide {
-  id: string;
-  country: string;
-  flag_emoji: string;
-  visa_type: string;
-  requirements: string[];
-  processing_time: string;
-  cost: string;
-  documents: string[];
-  description: string;
-  guide_link?: string;
-}
+import type { VisaGuide } from "@/lib/mock-data/types";
 
 export default function VisaGuidePage() {
   const [visaGuides, setVisaGuides] = useState<VisaGuide[]>([]);
@@ -25,22 +13,7 @@ export default function VisaGuidePage() {
       try {
         const response = await fetch("/api/visa-guides");
         const data = await response.json();
-        
-        // Map database fields to match the component's expected format
-        const mappedData = data.map((guide: any) => ({
-          id: guide.id,
-          country: guide.country,
-          flag: guide.flag_emoji,
-          visaType: guide.visa_type,
-          requirements: guide.requirements || [],
-          processingTime: guide.processing_time,
-          cost: guide.cost,
-          documents: guide.documents || [],
-          description: guide.description,
-          guideLink: guide.guide_link,
-        }));
-        
-        setVisaGuides(mappedData);
+        setVisaGuides(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Failed to fetch visa guides:", error);
       } finally {

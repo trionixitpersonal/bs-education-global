@@ -1,4 +1,5 @@
 import { CountryRequirementCard } from "@/components/country-requirements/country-requirement-card";
+import { getBaseUrl } from "@/lib/server-url";
 
 export const metadata = {
   title: "Country Specific Requirements | BS Education",
@@ -21,12 +22,9 @@ interface CountryRequirement {
 
 async function getCountryRequirements() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/country-requirements`,
-      {
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`${getBaseUrl()}/api/country-requirements`, {
+      cache: "no-store",
+    });
 
     if (!res.ok) {
       console.error("Failed to fetch country requirements");

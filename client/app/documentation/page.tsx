@@ -1,5 +1,6 @@
 import { DocumentGuideCard } from "@/components/documentation/document-guide-card";
 import { DocumentGuide } from "@/lib/mock-data/types";
+import { getBaseUrl } from "@/lib/server-url";
 
 export const metadata = {
   title: "Documentation Support | BS Education",
@@ -9,12 +10,9 @@ export const metadata = {
 
 async function getDocumentationGuides() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/documentation`,
-      {
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`${getBaseUrl()}/api/documentation`, {
+      cache: "no-store",
+    });
 
     if (!res.ok) {
       console.error("Failed to fetch documentation guides");
