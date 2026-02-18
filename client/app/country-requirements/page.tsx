@@ -1,5 +1,5 @@
 import { CountryRequirementCard } from "@/components/country-requirements/country-requirement-card";
-import { getBaseUrl } from "@/lib/server-url";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -24,16 +24,43 @@ interface CountryRequirement {
 
 async function getCountryRequirements() {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/country-requirements`, {
-      cache: "no-store",
-    });
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (!res.ok) {
-      console.error("Failed to fetch country requirements");
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error("Missing Supabase environment variables for country requirements fetch");
       return [];
     }
 
-    return res.json();
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+
+    const { data, error } = await supabase
+      .from("country_requirements")
+      .select("*")
+      .order("country", { ascending: true });
+
+    if (error) {
+      console.error("Supabase error fetching country requirements:", error);
+      return [];
+    }
+
+    return (data || []).map((requirement: any) => ({
+      id: requirement.id,
+      country: requirement.country,
+      flag_icon: requirement.flag_icon,
+      visa_types: requirement.visa_types || [],
+      processing_time: requirement.processing_time || "",
+      application_fee: requirement.application_fee || "",
+      financial_requirements: requirement.financial_requirements || "",
+      language_requirements: requirement.language_requirements || [],
+      key_requirements: requirement.key_requirements || [],
+      important_notes: requirement.important_notes || [],
+    })) as CountryRequirement[];
   } catch (error) {
     console.error("Error fetching country requirements:", error);
     return [];

@@ -1,5 +1,5 @@
 import { PostArrivalCard } from "@/components/post-arrival-support/post-arrival-card";
-import { getBaseUrl } from "@/lib/server-url";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -23,16 +23,42 @@ interface PostArrivalSupport {
 
 async function getPostArrivalSupport() {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/post-arrival-support`, {
-      cache: "no-store",
-    });
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (!res.ok) {
-      console.error("Failed to fetch post arrival support");
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error("Missing Supabase environment variables for post arrival support fetch");
       return [];
     }
 
-    return res.json();
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+
+    const { data, error } = await supabase
+      .from("post_arrival_support")
+      .select("*")
+      .order("category", { ascending: true });
+
+    if (error) {
+      console.error("Supabase error fetching post arrival support:", error);
+      return [];
+    }
+
+    return (data || []).map((support: any) => ({
+      id: support.id,
+      category: support.category,
+      title: support.title,
+      icon: support.icon,
+      description: support.description,
+      key_steps: support.key_steps || [],
+      important_contacts: support.important_contacts || [],
+      useful_resources: support.useful_resources || [],
+      timeline: support.timeline || "",
+    })) as PostArrivalSupport[];
   } catch (error) {
     console.error("Error fetching post arrival support:", error);
     return [];

@@ -1,5 +1,5 @@
 import { InterviewTipCard } from "@/components/interview-preparation/interview-tip-card";
-import { getBaseUrl } from "@/lib/server-url";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -23,16 +23,42 @@ interface InterviewTip {
 
 async function getInterviewPreparation() {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/interview-preparation`, {
-      cache: "no-store",
-    });
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (!res.ok) {
-      console.error("Failed to fetch interview preparation");
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error("Missing Supabase environment variables for interview preparation fetch");
       return [];
     }
 
-    return res.json();
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+
+    const { data, error } = await supabase
+      .from("interview_preparation")
+      .select("*")
+      .order("category", { ascending: true });
+
+    if (error) {
+      console.error("Supabase error fetching interview preparation:", error);
+      return [];
+    }
+
+    return (data || []).map((tip: any) => ({
+      id: tip.id,
+      category: tip.category,
+      title: tip.title,
+      icon: tip.icon,
+      common_questions: tip.common_questions || [],
+      dos: tip.dos || [],
+      donts: tip.donts || [],
+      preparation_tips: tip.preparation_tips || [],
+      sample_answers: tip.sample_answers || [],
+    })) as InterviewTip[];
   } catch (error) {
     console.error("Error fetching interview preparation:", error);
     return [];
