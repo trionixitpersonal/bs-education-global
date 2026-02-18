@@ -58,11 +58,21 @@ npm start
 
 ### Step 3: Apply RLS Policies to Supabase Database
 
+**If you get an error about policies already existing:**
+
+Use the safer script instead - it drops old policies first:
+
 1. Go to **https://supabase.com** → Your Project
 2. Click **SQL Editor**
 3. Click **New Query**
-4. Copy and paste the contents of `comprehensive-rls-fix.sql`
+4. Copy and paste the contents of **`safe-document-guides-fix.sql`** (if only document_guides needs fixing)
+   - OR use `comprehensive-rls-fix.sql` (drops and recreates all policies - safe to run multiple times now)
 5. Click **RUN**
+
+**Why you might get "policy already exists" error:**
+- Policies from previous deployments are still on the database
+- The updated `comprehensive-rls-fix.sql` now drops all existing policies first before creating new ones
+- This makes it safe to run multiple times
 
 This enables public read access to documentation and other content.
 
@@ -133,6 +143,27 @@ This enables public read access to documentation and other content.
      fetch('/api/documentation').then(r => r.json()).then(console.log)
      ```
    - Should return array of documents
+
+### Getting "policy already exists" error?
+
+1. **Use the safe script:**
+   - Copy contents of `safe-document-guides-fix.sql` instead
+   - This shows up when policies from old deployments exist
+
+2. **Or run the updated comprehensive fix:**
+   - The updated `comprehensive-rls-fix.sql` now drops all existing policies first
+   - Safe to run multiple times
+   - Recreates everything from scratch
+
+3. **Manual fix if needed:**
+   ```sql
+   -- Just drop and recreate the problematic policy
+   DROP POLICY IF EXISTS "Public read document_guides" ON public.document_guides;
+   
+   CREATE POLICY "Public read document_guides" ON public.document_guides 
+     FOR SELECT 
+     USING (true);
+   ```
 
 ---
 

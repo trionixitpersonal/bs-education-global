@@ -3,9 +3,10 @@
 -- This removes all problematic policies and restores proper access
 
 -- ============================================
--- STEP 1: Drop all problematic admin policies
+-- STEP 1: Drop ALL existing policies (both old and new)
 -- ============================================
 
+-- Drop old problematic admin policies
 DROP POLICY IF EXISTS "Admin write universities" ON public.universities;
 DROP POLICY IF EXISTS "Admin write programs" ON public.programs;
 DROP POLICY IF EXISTS "Admin write scholarships" ON public.scholarships;
@@ -19,6 +20,35 @@ DROP POLICY IF EXISTS "Admin write faqs" ON public.faqs;
 DROP POLICY IF EXISTS "Admin write support_options" ON public.support_options;
 DROP POLICY IF EXISTS "Admin read submissions" ON public.contact_submissions;
 DROP POLICY IF EXISTS "Allow admin full access" ON public.profiles;
+
+-- Drop any existing public read policies (from previous attempts)
+DROP POLICY IF EXISTS "Allow public read access" ON public.universities;
+DROP POLICY IF EXISTS "Allow public read access" ON public.programs;
+DROP POLICY IF EXISTS "Allow public read access on active scholarships" ON public.scholarships;
+DROP POLICY IF EXISTS "Allow public read access" ON public.qs_rankings;
+DROP POLICY IF EXISTS "Allow public read access" ON public.study_destinations;
+DROP POLICY IF EXISTS "Allow public read access" ON public.visa_guides;
+DROP POLICY IF EXISTS "Allow public read access" ON public.application_steps;
+DROP POLICY IF EXISTS "Allow public read access" ON public.document_guides;
+DROP POLICY IF EXISTS "Allow public read access" ON public.resources;
+DROP POLICY IF EXISTS "Allow public read access on active FAQs" ON public.faqs;
+DROP POLICY IF EXISTS "Allow public read access on active support" ON public.support_options;
+
+-- Drop new-style public read policies (if they exist from previous runs)
+DROP POLICY IF EXISTS "Public read universities" ON public.universities;
+DROP POLICY IF EXISTS "Public read programs" ON public.programs;
+DROP POLICY IF EXISTS "Public read active scholarships" ON public.scholarships;
+DROP POLICY IF EXISTS "Public read qs_rankings" ON public.qs_rankings;
+DROP POLICY IF EXISTS "Public read study_destinations" ON public.study_destinations;
+DROP POLICY IF EXISTS "Public read visa_guides" ON public.visa_guides;
+DROP POLICY IF EXISTS "Public read application_steps" ON public.application_steps;
+DROP POLICY IF EXISTS "Public read document_guides" ON public.document_guides;
+DROP POLICY IF EXISTS "Public read resources" ON public.resources;
+DROP POLICY IF EXISTS "Public read active faqs" ON public.faqs;
+DROP POLICY IF EXISTS "Public read active support_options" ON public.support_options;
+DROP POLICY IF EXISTS "Public insert contact_submissions" ON public.contact_submissions;
+DROP POLICY IF EXISTS "Users read own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users update own profile" ON public.profiles;
 
 -- ============================================
 -- STEP 2: Create public read-only policies
