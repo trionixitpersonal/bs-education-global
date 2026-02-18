@@ -48,53 +48,213 @@ CREATE POLICY "Users can insert own profile" ON public.profiles
   FOR INSERT 
   WITH CHECK (auth.uid() = id);
 
--- Step 5: Recreate admin write policies WITHOUT referencing profiles table
--- These policies use the service role or check metadata instead
+-- Step 5: Recreate policies - PUBLIC READ + ADMIN WRITE
+-- These policies allow public read access to content while restricting writes to admins
+
+-- UNIVERSITIES
+CREATE POLICY "Allow public read universities" ON public.universities 
+  FOR SELECT 
+  USING (true);
 
 CREATE POLICY "Admin write universities" ON public.universities 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update universities" ON public.universities 
+  FOR UPDATE 
   USING (public.is_admin());
 
+CREATE POLICY "Admin delete universities" ON public.universities 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- PROGRAMS
+CREATE POLICY "Allow public read programs" ON public.programs 
+  FOR SELECT 
+  USING (true);
+
 CREATE POLICY "Admin write programs" ON public.programs 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update programs" ON public.programs 
+  FOR UPDATE 
+  USING (public.is_admin());
+
+CREATE POLICY "Admin delete programs" ON public.programs 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- SCHOLARSHIPS (only show active ones to public)
+CREATE POLICY "Allow public read active scholarships" ON public.scholarships 
+  FOR SELECT 
+  USING (is_active = true);
+
+CREATE POLICY "Admin read all scholarships" ON public.scholarships 
+  FOR SELECT 
   USING (public.is_admin());
 
 CREATE POLICY "Admin write scholarships" ON public.scholarships 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update scholarships" ON public.scholarships 
+  FOR UPDATE 
   USING (public.is_admin());
 
-CREATE POLICY "Admin write qs_rankings" ON public.qs_rankings 
-  FOR ALL 
+CREATE POLICY "Admin delete scholarships" ON public.scholarships 
+  FOR DELETE 
   USING (public.is_admin());
 
-CREATE POLICY "Admin write study_destinations" ON public.study_destinations 
-  FOR ALL 
+-- QS RANKINGS
+CREATE POLICY "Allow public read rankings" ON public.qs_rankings 
+  FOR SELECT 
+  USING (true);
+
+CREATE POLICY "Admin write rankings" ON public.qs_rankings 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update rankings" ON public.qs_rankings 
+  FOR UPDATE 
   USING (public.is_admin());
+
+CREATE POLICY "Admin delete rankings" ON public.qs_rankings 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- STUDY DESTINATIONS
+CREATE POLICY "Allow public read destinations" ON public.study_destinations 
+  FOR SELECT 
+  USING (true);
+
+CREATE POLICY "Admin write destinations" ON public.study_destinations 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update destinations" ON public.study_destinations 
+  FOR UPDATE 
+  USING (public.is_admin());
+
+CREATE POLICY "Admin delete destinations" ON public.study_destinations 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- VISA GUIDES
+CREATE POLICY "Allow public read visa_guides" ON public.visa_guides 
+  FOR SELECT 
+  USING (true);
 
 CREATE POLICY "Admin write visa_guides" ON public.visa_guides 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update visa_guides" ON public.visa_guides 
+  FOR UPDATE 
   USING (public.is_admin());
+
+CREATE POLICY "Admin delete visa_guides" ON public.visa_guides 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- APPLICATION STEPS
+CREATE POLICY "Allow public read application_steps" ON public.application_steps 
+  FOR SELECT 
+  USING (true);
 
 CREATE POLICY "Admin write application_steps" ON public.application_steps 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update application_steps" ON public.application_steps 
+  FOR UPDATE 
   USING (public.is_admin());
+
+CREATE POLICY "Admin delete application_steps" ON public.application_steps 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- DOCUMENT GUIDES
+CREATE POLICY "Allow public read document_guides" ON public.document_guides 
+  FOR SELECT 
+  USING (true);
 
 CREATE POLICY "Admin write document_guides" ON public.document_guides 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update document_guides" ON public.document_guides 
+  FOR UPDATE 
   USING (public.is_admin());
 
+CREATE POLICY "Admin delete document_guides" ON public.document_guides 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- RESOURCES
+CREATE POLICY "Allow public read resources" ON public.resources 
+  FOR SELECT 
+  USING (true);
+
 CREATE POLICY "Admin write resources" ON public.resources 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update resources" ON public.resources 
+  FOR UPDATE 
+  USING (public.is_admin());
+
+CREATE POLICY "Admin delete resources" ON public.resources 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- FAQS (only show active ones to public)
+CREATE POLICY "Allow public read active faqs" ON public.faqs 
+  FOR SELECT 
+  USING (is_active = true);
+
+CREATE POLICY "Admin read all faqs" ON public.faqs 
+  FOR SELECT 
   USING (public.is_admin());
 
 CREATE POLICY "Admin write faqs" ON public.faqs 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update faqs" ON public.faqs 
+  FOR UPDATE 
+  USING (public.is_admin());
+
+CREATE POLICY "Admin delete faqs" ON public.faqs 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- SUPPORT OPTIONS (only show active ones to public)
+CREATE POLICY "Allow public read active support_options" ON public.support_options 
+  FOR SELECT 
+  USING (is_active = true);
+
+CREATE POLICY "Admin read all support_options" ON public.support_options 
+  FOR SELECT 
   USING (public.is_admin());
 
 CREATE POLICY "Admin write support_options" ON public.support_options 
-  FOR ALL 
+  FOR INSERT 
+  WITH CHECK (public.is_admin());
+
+CREATE POLICY "Admin update support_options" ON public.support_options 
+  FOR UPDATE 
   USING (public.is_admin());
 
+CREATE POLICY "Admin delete support_options" ON public.support_options 
+  FOR DELETE 
+  USING (public.is_admin());
+
+-- CONTACT SUBMISSIONS (only admins can read)
 CREATE POLICY "Admin read submissions" ON public.contact_submissions 
   FOR SELECT 
   USING (public.is_admin());
+
+CREATE POLICY "Allow public submit contact" ON public.contact_submissions 
+  FOR INSERT 
+  WITH CHECK (true);
