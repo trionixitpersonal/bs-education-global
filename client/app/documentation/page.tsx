@@ -1,6 +1,6 @@
 import { DocumentGuideCard } from "@/components/documentation/document-guide-card";
 import { DocumentGuide } from "@/lib/mock-data/types";
-import { getBaseUrl } from "@/lib/server-url";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -12,16 +12,30 @@ export const metadata = {
 
 async function getDocumentationGuides() {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/documentation`, {
-      cache: "no-store",
-    });
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (!res.ok) {
-      console.error("Failed to fetch documentation guides");
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error("Missing Supabase environment variables for documentation fetch");
       return [];
     }
 
-    const data = await res.json();
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+
+    const { data, error } = await supabase
+      .from("document_guides")
+      .select("*")
+      .order("country", { ascending: true });
+
+    if (error) {
+      console.error("Supabase error fetching documentation guides:", error);
+      return [];
+    }
     
     // Map database fields to frontend fields
     return data.map((guide: any) => ({
@@ -29,9 +43,9 @@ async function getDocumentationGuides() {
       title: guide.title,
       country: guide.country,
       visaType: guide.visa_type,
-      documents: guide.documents,
-      checklist: guide.checklist,
-      templates: guide.templates,
+      documents: guide.documents || [],
+      checklist: guide.checklist || [],
+      templates: guide.templates || [],
     })) as DocumentGuide[];
   } catch (error) {
     console.error("Error fetching documentation guides:", error);
