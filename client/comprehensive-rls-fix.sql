@@ -82,7 +82,7 @@ CREATE POLICY "Public read active support_options" ON public.support_options
 -- CONTACT SUBMISSIONS - Public insert for contact form
 CREATE POLICY "Public insert contact_submissions" ON public.contact_submissions 
   FOR INSERT 
-  USING (true);
+  WITH CHECK (true);
 
 -- PROFILES - Users can read and update their own profile
 CREATE POLICY "Users read own profile" ON public.profiles 
