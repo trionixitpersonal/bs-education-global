@@ -10,12 +10,14 @@ export async function GET() {
 
     if (error) {
       console.error("Supabase error:", error);
+      // Still return empty array to prevent frontend breaking
       return NextResponse.json([]);
     }
 
     return NextResponse.json(data || []);
   } catch (error) {
     console.error("Failed to fetch documentation guides:", error);
+    // Return empty array instead of error to prevent breaking frontend
     return NextResponse.json([]);
   }
 }
@@ -32,14 +34,17 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Error creating documentation guide:", error);
-      throw error;
+      return NextResponse.json(
+        { error: "Failed to create documentation guide", details: error.message },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(data, { status: 201 });
   } catch (error) {
     console.error("Failed to create documentation guide:", error);
     return NextResponse.json(
-      { error: "Failed to create documentation guide" },
+      { error: "Failed to create documentation guide", details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
