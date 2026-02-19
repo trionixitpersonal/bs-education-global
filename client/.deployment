@@ -1,0 +1,2 @@
+[config]
+command = npm install && npm run build && pm2 restart all || npm start
