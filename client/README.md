@@ -1,5 +1,19 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment Variables Required
+
+For production deployment, ensure these environment variables are set:
+
+- `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key
+- `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
+- `NEXTAUTH_URL` - Your production URL (e.g., https://bsedu.com.au)
+- `NEXTAUTH_SECRET` - Secret for NextAuth session encryption
+- `NEXT_PUBLIC_APP_URL` - Application URL (e.g., https://bsedu.com.au)
+- `NEXT_PUBLIC_SITE_URL` - Site URL (e.g., https://bsedu.com.au)
+- `ADMIN_EMAIL` - Admin email for initial setup
+- `ADMIN_PASSWORD` - Admin password for initial setup
+
 ## Getting Started
 
 First, run the development server:
