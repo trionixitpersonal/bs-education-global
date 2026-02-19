@@ -23,7 +23,7 @@ export function ResourceFilters() {
 
   return (
     <div className="mb-8">
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
         <span className="text-sm font-medium text-muted-foreground">
           Category:
         </span>
@@ -46,7 +46,7 @@ export function ResourceFilters() {
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="ml-auto"
+            className="w-full sm:ml-auto sm:w-auto"
           >
             Clear Filter
           </Button>

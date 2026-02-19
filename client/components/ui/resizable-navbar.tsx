@@ -92,7 +92,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "70%" : "100%",
+        maxWidth: visible ? "72rem" : "90rem",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -101,7 +101,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         damping: 50,
       }}
       style={{
-        minWidth: visible ? "1200px" : "800px",
+        width: "100%",
       }}
       className={cn(
         "relative z-[60] mx-auto hidden w-full flex-row items-center justify-between self-start rounded-b-lg px-6 py-2 lg:flex",
@@ -249,9 +249,12 @@ export const NavbarLogo = () => {
         width={60}
         height={50}
       />
-      <span className="font-bold text-xl text-black dark:text-white h-full">
-        BS <span className="text-blue-600 dark:text-blue-400">Education</span>{" "}
-        Global
+      <span className="font-bold text-base text-black dark:text-white sm:text-xl">
+        <span className="sm:hidden">BS Edu</span>
+        <span className="hidden sm:inline">
+          BS <span className="text-blue-600 dark:text-blue-400">Education</span>{" "}
+          Global
+        </span>
       </span>
     </a>
   );

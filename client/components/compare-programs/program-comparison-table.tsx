@@ -49,12 +49,12 @@ export function ProgramComparisonTable({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
+      <table className="w-full min-w-[720px] border-collapse">
         <thead>
           <tr className="border-b border-border">
-            <th className="p-4 text-left font-semibold">Criteria</th>
+            <th className="p-3 sm:p-4 text-left font-semibold">Criteria</th>
             {programs.map((program) => (
-              <th key={program.id} className="p-4 text-left font-semibold">
+              <th key={program.id} className="p-3 sm:p-4 text-left font-semibold">
                 <div className="max-w-xs">
                   <div className="font-medium">{program.name}</div>
                   <div className="text-sm font-normal text-muted-foreground">
@@ -68,14 +68,14 @@ export function ProgramComparisonTable({
         <tbody>
           {comparisonFields.map((field, idx) => (
             <tr key={idx} className="border-b border-border">
-              <td className="p-4">
+              <td className="p-3 sm:p-4">
                 <div className="flex items-center gap-2">
                   {field.icon && <field.icon className="h-4 w-4 text-muted-foreground" />}
                   <span className="font-medium">{field.label}</span>
                 </div>
               </td>
               {programs.map((program) => (
-                <td key={program.id} className="p-4">
+                <td key={program.id} className="p-3 sm:p-4">
                   {field.label === "Requirements" ? (
                     <div className="space-y-1">
                       <span className="text-sm">{field.getValue(program)}</span>
@@ -102,14 +102,14 @@ export function ProgramComparisonTable({
             </tr>
           ))}
           <tr>
-            <td className="p-4">
+            <td className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-muted-foreground" />
                 <span className="font-medium">Description</span>
               </div>
             </td>
             {programs.map((program) => (
-              <td key={program.id} className="p-4">
+              <td key={program.id} className="p-3 sm:p-4">
                 <p className="text-sm text-muted-foreground line-clamp-3">
                   {program.description}
                 </p>

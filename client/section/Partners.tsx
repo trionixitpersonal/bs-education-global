@@ -99,7 +99,7 @@ export default function Partners({
   }
 
   return (
-    <section ref={ref} className="relative w-full overflow-hidden bg-gray-50 py-48 lg:py-64">
+    <section ref={ref} className="relative w-full overflow-hidden bg-gray-50 py-16 sm:py-24 lg:py-32">
       <motion.div style={{ y, opacity }} className="container relative mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
         <motion.div 
@@ -107,12 +107,12 @@ export default function Partners({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-32 text-center lg:mb-40"
+          className="mb-16 text-center sm:mb-24 lg:mb-32"
         >
-          <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+          <h2 className="text-3xl font-light leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-6xl">
             Partner Universities
           </h2>
-          <p className="mt-8 text-xl text-gray-600 font-light">
+          <p className="mt-6 text-base text-gray-600 font-light sm:text-lg">
             650+ global institutions
           </p>
         </motion.div>
@@ -157,7 +157,7 @@ export default function Partners({
             >
               {slides.map((slideUniversities, slideIndex) => (
                 <SwiperSlide key={slideIndex}>
-                  <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
+                  <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-3 lg:grid-cols-4">
                     {slideUniversities.map((university) => (
                       <motion.div
                         key={university.id}
@@ -165,7 +165,7 @@ export default function Partners({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="relative flex h-40 items-center justify-center overflow-hidden bg-white p-8 transition-all hover:bg-gray-50 sm:h-44 lg:h-48"
+                        className="relative flex h-28 items-center justify-center overflow-hidden bg-white p-6 transition-all hover:bg-gray-50 sm:h-36 lg:h-48"
                       >
                         <div className="relative h-full w-full">
                           <Image
@@ -186,7 +186,7 @@ export default function Partners({
                       }).map((_, index) => (
                         <div
                           key={`empty-${index}`}
-                          className="h-40 sm:h-44 lg:h-48"
+                          className="h-28 sm:h-36 lg:h-48"
                           aria-hidden="true"
                         />
                       ))}

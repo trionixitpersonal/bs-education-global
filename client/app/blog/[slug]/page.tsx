@@ -17,7 +17,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   return (
     <main className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-gray-50 border-b pt-32 pb-12">
+      <div className="bg-gray-50 border-b pt-24 pb-10 sm:pt-32 sm:pb-12">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <Link
             href="/blog"
@@ -27,7 +27,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             Back to Blog
           </Link>
           <div className="max-w-4xl">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="px-4 py-1.5 bg-blue-100 text-blue-600 rounded-full font-medium text-sm">
                 {post.category}
               </span>
@@ -42,10 +42,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </div>
               </div>
             </div>
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               {post.title}
             </h1>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden">
                   <Image
@@ -78,7 +78,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* Featured Image */}
-      <div className="relative w-full h-[400px] lg:h-[600px]">
+      <div className="relative w-full h-64 sm:h-80 lg:h-[600px]">
         <Image
           src={post.image}
           fill
@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* Content */}
-      <article className="py-16 lg:py-24">
+      <article className="py-12 sm:py-16 lg:py-24">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto">
             <div 
@@ -109,10 +109,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </article>
 
       {/* Author Bio */}
-      <section className="py-12 bg-gray-50 border-y">
+      <section className="py-10 sm:py-12 bg-gray-50 border-y">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto">
-            <div className="flex items-start gap-6">
+            <div className="flex flex-col items-start gap-6 sm:flex-row">
               <div className="relative w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
                 <Image
                   src={post.authorImage}
@@ -141,11 +141,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
 
       {/* Related Posts */}
-      <section className="py-16 lg:py-24">
+      <section className="py-12 sm:py-16 lg:py-24">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 mb-12">Related Articles</h2>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {relatedPosts.map((relatedPost, index) => (
                 <Link
                   key={index}
@@ -176,13 +176,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-blue-600 text-white">
+      <section className="py-12 sm:py-16 bg-blue-600 text-white">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-3xl lg:text-4xl font-bold">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
               Ready to Start Your Application?
             </h2>
-            <p className="text-xl text-blue-100">
+            <p className="text-base sm:text-xl text-blue-100">
               Get personalized guidance from our expert education consultants
             </p>
             <Link

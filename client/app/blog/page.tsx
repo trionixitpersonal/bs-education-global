@@ -19,13 +19,13 @@ export default function BlogPage() {
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white pt-32 pb-20 lg:pt-40 lg:pb-28">
+      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white pt-24 pb-16 sm:pt-32 sm:pb-20 lg:pt-40 lg:pb-28">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h1 className="text-4xl font-bold lg:text-5xl">
+            <h1 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
               Education Insights & Resources
             </h1>
-            <p className="text-xl text-blue-100 font-light">
+            <p className="text-base sm:text-xl text-blue-100 font-light">
               Expert advice, tips, and news about studying abroad
             </p>
           </div>
@@ -33,13 +33,13 @@ export default function BlogPage() {
       </section>
 
       {/* Featured Post */}
-      <section className="py-16 lg:py-20 bg-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900">Featured Article</h2>
           </div>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+            <div className="relative h-64 sm:h-80 lg:h-[500px] rounded-2xl overflow-hidden">
               <Image
                 src={featuredPost.image}
                 fill
@@ -49,7 +49,7 @@ export default function BlogPage() {
               />
             </div>
             <div className="space-y-6">
-              <div className="flex items-center gap-4 text-sm">
+              <div className="flex flex-wrap items-center gap-3 text-sm">
                 <span className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full font-medium">
                   {featuredPost.category}
                 </span>
@@ -86,7 +86,7 @@ export default function BlogPage() {
       </section>
 
       {/* Categories */}
-      <section className="py-12 border-y bg-white">
+      <section className="py-10 sm:py-12 border-y bg-white">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="flex flex-wrap gap-4 justify-center">
             {categories.map((category, index) => {
@@ -107,12 +107,12 @@ export default function BlogPage() {
       </section>
 
       {/* Blog Grid */}
-      <section className="py-20">
+      <section className="py-12 sm:py-16 lg:py-20">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="mb-12">
             <h2 className="text-3xl font-bold text-gray-900">Latest Articles</h2>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post, index) => (
               <Link key={index} href={`/blog/${post.slug}`}>
               <article className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
@@ -157,24 +157,24 @@ export default function BlogPage() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-2xl mx-auto text-center space-y-6">
-            <h2 className="text-3xl lg:text-4xl font-bold">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
               Stay Updated with Our Newsletter
             </h2>
-            <p className="text-xl text-blue-100">
+            <p className="text-base sm:text-xl text-blue-100">
               Get the latest articles, tips, and study abroad news delivered to your inbox
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-6 py-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+                className="min-w-0 flex-1 px-6 py-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
               />
               <button
                 type="submit"
-                className="px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap"
+                className="w-full sm:w-auto px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap"
               >
                 Subscribe
               </button>

@@ -47,7 +47,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section ref={ref} className="relative w-full overflow-hidden min-h-screen flex items-center">
+    <section ref={ref} className="relative w-full overflow-hidden min-h-[80vh] sm:min-h-screen flex items-center">
       {/* Background Image Slider with Parallax */}
       <motion.div 
         style={{ y: bgY }}
@@ -78,16 +78,16 @@ export default function HeroSection() {
       <div className="container relative z-10 mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
         <motion.div 
           style={{ y, opacity }}
-          className="flex flex-col items-center gap-16 py-16 md:flex-row md:items-center md:justify-between md:gap-20 lg:gap-24 lg:py-24 min-h-screen"
+          className="flex flex-col items-center gap-10 py-12 sm:py-16 md:flex-row md:items-center md:justify-between md:gap-16 lg:gap-24 lg:py-24 min-h-[70vh] sm:min-h-screen"
         >
           {/* Text Content - Left Side */}
-          <div className="flex flex-1 flex-col gap-12 text-center md:text-left max-w-2xl">
+          <div className="flex flex-1 flex-col gap-10 text-center md:text-left max-w-2xl">
             <div className="space-y-8">
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="text-5xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl tracking-tight"
+                className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-7xl tracking-tight"
               >
                 Connect with your dream{" "}
                 <span className="font-bold text-blue-600">
@@ -98,7 +98,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                className="text-xl leading-relaxed text-white/90 font-light"
+                className="text-base sm:text-lg lg:text-xl leading-relaxed text-white/90 font-light"
               >
                 Your pathway to world-class education starts here.
               </motion.p>
@@ -107,17 +107,17 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="flex flex-col gap-5"
+              className="flex flex-col gap-4 sm:gap-5"
             >
               <li className="flex items-start gap-4">
                 <CircleCheck className="h-5 w-5 flex-shrink-0 text-blue-600 mt-1" strokeWidth={1.5} />
-                <p className="text-lg leading-relaxed text-white/90 font-light">
+                <p className="text-base sm:text-lg leading-relaxed text-white/90 font-light">
                   Personalized admission support
                 </p>
               </li>
               <li className="flex items-start gap-4">
                 <CircleCheck className="h-5 w-5 flex-shrink-0 text-blue-600 mt-1" strokeWidth={1.5} />
-                <p className="text-lg leading-relaxed text-white/90 font-light">
+                <p className="text-base sm:text-lg leading-relaxed text-white/90 font-light">
                   Academic details in just a few clicks
                 </p>
               </li>

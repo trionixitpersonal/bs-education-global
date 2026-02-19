@@ -218,7 +218,7 @@ await fetchApplications();
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900">My Applications</h1>
           <p className="text-sm sm:text-base text-gray-600 mt-1">Track and manage your university applications</p>
         </div>
-        <Button onClick={() => setShowDialog(true)} className="bg-blue-600 hover:bg-blue-700 w full sm:w-auto">
+        <Button onClick={() => setShowDialog(true)} className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto">
           <Plus className="h-4 w-4 mr-2" />
           New Application
         </Button>
