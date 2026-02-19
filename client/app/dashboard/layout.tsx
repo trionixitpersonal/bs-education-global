@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { requireAuth } from "@/lib/auth/auth-utils";
-import { DashboardShell } from "@/components/dashboard/DashboardShell";
+import { UserSidebar } from "@/components/dashboard/UserSidebar";
+import { UserHeader } from "@/components/dashboard/UserHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +13,14 @@ export default async function DashboardLayout({
   await requireAuth();
 
   return (
-    <DashboardShell>{children}</DashboardShell>
+    <div className="flex h-screen overflow-hidden bg-gray-50">
+      <UserSidebar />
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <UserHeader />
+        <main className="flex-1 overflow-y-auto p-6">
+          {children}
+        </main>
+      </div>
+    </div>
   );
 }

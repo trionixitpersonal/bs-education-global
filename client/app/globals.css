@@ -170,19 +170,6 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    overflow-x: hidden;
-  }
-
-  img,
-  video {
-    max-width: 100%;
-    height: auto;
-  }
-
-  input,
-  select,
-  textarea {
-    max-width: 100%;
   }
 }
 

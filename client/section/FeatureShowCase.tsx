@@ -84,10 +84,10 @@ export default function FeatureShowCase({
   }
 
   return (
-    <section className="w-full bg-white py-16 sm:py-24 lg:py-32">
+    <section className="w-full bg-white py-48 lg:py-64">
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
         <div ref={containerRef} className="relative">
-          <div className="space-y-16 sm:space-y-24 lg:space-y-32">
+          <div className="space-y-48 lg:space-y-64">
             {features.map((feature, index) => {
               const isEven = index % 2 === 0;
 
@@ -98,7 +98,7 @@ export default function FeatureShowCase({
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    className="grid grid-cols-1 gap-10 sm:gap-14 lg:grid-cols-2 lg:gap-32"
+                    className="grid grid-cols-1 gap-20 lg:grid-cols-2 lg:gap-32"
                   >
                     {/* Image Column - Background Style */}
                     <div
@@ -111,7 +111,7 @@ export default function FeatureShowCase({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                        className="relative w-full h-64 sm:h-80 lg:h-[500px]"
+                        className="relative w-full h-[400px] lg:h-[500px]"
                       >
                         <div className="relative w-full h-full overflow-hidden rounded-lg">
                           <Image

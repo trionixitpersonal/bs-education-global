@@ -12,14 +12,14 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white pt-24 pb-16 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-32">
+      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white pt-32 pb-24 lg:pt-40 lg:pb-32">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="container relative mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <h1 className="text-3xl font-bold sm:text-4xl lg:text-6xl">
+            <h1 className="text-4xl font-bold lg:text-6xl">
               {hero.title}
             </h1>
-            <p className="text-base sm:text-xl lg:text-2xl text-blue-100 font-light">
+            <p className="text-xl lg:text-2xl text-blue-100 font-light">
               {hero.subtitle}
             </p>
           </div>
@@ -27,9 +27,9 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 sm:py-16 bg-gray-50 border-b">
+      <section className="py-16 bg-gray-50 border-b">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat: any, index: number) => {
               const Icon = iconMap[stat.icon];
               return (
@@ -49,7 +49,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      <section className="py-24 lg:py-32">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
@@ -62,7 +62,7 @@ export default function AboutPage() {
                 </p>
               ))}
             </div>
-            <div className="relative h-64 sm:h-80 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
                 fill
@@ -76,7 +76,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-gray-50">
+      <section className="py-24 lg:py-32 bg-gray-50">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
@@ -106,7 +106,7 @@ export default function AboutPage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      <section className="py-24 lg:py-32">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
@@ -132,7 +132,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-gray-50">
+      <section className="py-24 lg:py-32 bg-gray-50">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
@@ -142,10 +142,10 @@ export default function AboutPage() {
               Experienced professionals dedicated to your success
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 gap-12">
             {team.map((member, index) => (
               <div key={index} className="text-center space-y-4">
-                <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto rounded-full overflow-hidden">
+                <div className="relative w-48 h-48 mx-auto rounded-full overflow-hidden">
                   <Image
                     src={member.image}
                     fill
@@ -166,13 +166,13 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 sm:py-24 bg-blue-600 text-white">
+      <section className="py-24 bg-blue-600 text-white">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+          <div className="max: any, index: numbermx-auto text-center space-y-8">
+            <h2 className="text-3xl lg:text-4xl font-bold">
               Ready to Start Your Journey?
             </h2>
-            <p className="text-base sm:text-xl text-blue-100">
+            <p className="text-xl text-blue-100">
               Join thousands of successful students who trusted us with their educational dreams
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

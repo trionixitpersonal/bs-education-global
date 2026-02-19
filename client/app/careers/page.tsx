@@ -31,14 +31,14 @@ export default function CareersPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white pt-24 pb-16 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-32">
+      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white pt-32 pb-24 lg:pt-40 lg:pb-32">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="container relative mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <h1 className="text-3xl font-bold sm:text-4xl lg:text-6xl">
+            <h1 className="text-4xl font-bold lg:text-6xl">
               {hero.title}
             </h1>
-            <p className="text-base sm:text-xl lg:text-2xl text-blue-100 font-light">
+            <p className="text-xl lg:text-2xl text-blue-100 font-light">
               {hero.subtitle}
             </p>
           </div>
@@ -46,7 +46,7 @@ export default function CareersPage() {
       </section>
 
       {/* Why Join Us */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      <section className="py-24 lg:py-32">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
@@ -71,7 +71,7 @@ export default function CareersPage() {
                 ))}
               </div>
             </div>
-            <div className="relative h-64 sm:h-80 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
                 fill
@@ -85,7 +85,7 @@ export default function CareersPage() {
       </section>
 
       {/* Benefits */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-gray-50">
+      <section className="py-24 lg:py-32 bg-gray-50">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
@@ -115,7 +115,7 @@ export default function CareersPage() {
       </section>
 
       {/* Open Positions */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      <section className="py-24 lg:py-32">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
           <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
@@ -149,7 +149,7 @@ export default function CareersPage() {
                         </div>
                       </div>
                     </div>
-                    <button className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">
+                    <button className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">
                       Apply Now
                     </button>
                   </div>
@@ -175,13 +175,13 @@ export default function CareersPage() {
       </section>
 
       {/* Application CTA */}
-      <section className="py-16 sm:py-24 bg-gray-50">
+      <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
-          <div className="max-w-3xl mx-auto bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-6 sm:p-10 lg:p-12 text-center text-white space-y-6">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+          <div className="max-w-3xl mx-auto bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-12 text-center text-white space-y-6">
+            <h2 className="text-3xl lg:text-4xl font-bold">
               Don't See Your Perfect Role?
             </h2>
-            <p className="text-base sm:text-xl text-blue-100">
+            <p className="text-xl text-blue-100">
               We're always looking for talented individuals. Send us your CV and we'll keep 
               you in mind for future opportunities.
             </p>

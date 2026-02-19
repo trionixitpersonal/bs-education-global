@@ -107,7 +107,7 @@ export function ScholarshipFilters({ onFilterChange }: ScholarshipFiltersProps) 
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+      <div className="flex flex-wrap items-center gap-4">
         <div className="flex flex-wrap gap-2">
           <span className="text-sm font-medium text-muted-foreground">
             Country:
@@ -161,7 +161,7 @@ export function ScholarshipFilters({ onFilterChange }: ScholarshipFiltersProps) 
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="w-full sm:ml-auto sm:w-auto"
+            className="ml-auto"
           >
             <X className="mr-2 h-4 w-4" />
             Clear Filters

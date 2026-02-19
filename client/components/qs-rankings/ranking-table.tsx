@@ -49,10 +49,10 @@ export function RankingTable({ rankings }: RankingTableProps) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[900px] border-collapse">
+      <table className="w-full border-collapse">
         <thead>
           <tr className="border-b border-border bg-muted/50">
-            <th className="p-3 sm:p-4 text-left">
+            <th className="p-4 text-left">
               <button
                 onClick={() => handleSort("rank")}
                 className="flex items-center gap-2 font-semibold hover:text-primary"
@@ -69,11 +69,11 @@ export function RankingTable({ rankings }: RankingTableProps) {
                 )}
               </button>
             </th>
-            <th className="p-3 sm:p-4 text-left font-semibold">University</th>
-            <th className="p-3 sm:p-4 text-left font-semibold">Country</th>
-            <th className="p-3 sm:p-4 text-left font-semibold">Region</th>
-            <th className="p-3 sm:p-4 text-left font-semibold">Discipline</th>
-            <th className="p-3 sm:p-4 text-left">
+            <th className="p-4 text-left font-semibold">University</th>
+            <th className="p-4 text-left font-semibold">Country</th>
+            <th className="p-4 text-left font-semibold">Region</th>
+            <th className="p-4 text-left font-semibold">Discipline</th>
+            <th className="p-4 text-left">
               <button
                 onClick={() => handleSort("score")}
                 className="flex items-center gap-2 font-semibold hover:text-primary"
@@ -98,26 +98,26 @@ export function RankingTable({ rankings }: RankingTableProps) {
               key={ranking.id}
               className="border-b border-border transition-colors hover:bg-muted/50"
             >
-              <td className="p-3 sm:p-4">
+              <td className="p-4">
                 <span className="text-lg font-bold text-primary">
                   #{ranking.rank}
                 </span>
               </td>
-              <td className="p-3 sm:p-4 font-medium">{ranking.university_name}</td>
-              <td className="p-3 sm:p-4 text-sm text-muted-foreground">
+              <td className="p-4 font-medium">{ranking.university_name}</td>
+              <td className="p-4 text-sm text-muted-foreground">
                 {ranking.country}
               </td>
-              <td className="p-3 sm:p-4">
+              <td className="p-4">
                 <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                   {ranking.region}
                 </span>
               </td>
-              <td className="p-3 sm:p-4">
+              <td className="p-4">
                 <span className="inline-block rounded-full bg-muted px-3 py-1 text-xs font-medium">
                   {ranking.discipline}
                 </span>
               </td>
-              <td className="p-3 sm:p-4">
+              <td className="p-4">
                 <span className="font-semibold">{ranking.score.toFixed(1)}</span>
               </td>
             </tr>

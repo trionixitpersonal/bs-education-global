@@ -359,9 +359,7 @@ export function NavbarWrapper({
       </Navbar>
 
       {/* Content wrapper - preserves the structure needed for navbar resizing */}
-      <div className="pt-20 lg:pt-24">
-        {children}
-      </div>
+      {children}
     </div>
   );
 }

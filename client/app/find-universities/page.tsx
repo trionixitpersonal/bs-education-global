@@ -112,7 +112,7 @@ export default function FindUniversitiesPage() {
   return (
     <main className="w-full overflow-x-hidden">
       {/* Hero Section with Form */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 pt-24 pb-10 sm:pt-32 sm:pb-12 lg:pt-40 lg:pb-16">
+      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 pt-32 pb-12 lg:pt-40 lg:pb-16">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:32px]" />
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
@@ -123,29 +123,29 @@ export default function FindUniversitiesPage() {
               </span>
               {filteredUniversities.length} Universities Available
             </div>
-            <h1 className="mb-6 text-3xl sm:text-4xl font-bold tracking-tight text-white lg:text-6xl">
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-white lg:text-6xl">
               Find Your Perfect
               <span className="block bg-gradient-to-r from-yellow-200 to-orange-300 bg-clip-text text-transparent">
                 University Match
               </span>
             </h1>
-            <p className="mx-auto mb-8 max-w-2xl text-base sm:text-lg text-blue-100">
+            <p className="mx-auto mb-8 max-w-2xl text-lg text-blue-100">
               Discover universities worldwide that match your academic goals,
               interests, and career aspirations. Search by country, program, or ranking.
             </p>
 
             {/* Quick Stats */}
-            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6 mb-10 sm:mb-12">
+            <div className="mt-12 grid grid-cols-3 gap-6 mb-12">
               <div className="rounded-xl bg-white/10 backdrop-blur-sm p-4 border border-white/20">
-                <div className="text-2xl sm:text-3xl font-bold text-white">{universities.length}+</div>
+                <div className="text-3xl font-bold text-white">{universities.length}+</div>
                 <div className="text-sm text-blue-100">Universities</div>
               </div>
               <div className="rounded-xl bg-white/10 backdrop-blur-sm p-4 border border-white/20">
-                <div className="text-2xl sm:text-3xl font-bold text-white">50+</div>
+                <div className="text-3xl font-bold text-white">50+</div>
                 <div className="text-sm text-blue-100">Countries</div>
               </div>
               <div className="rounded-xl bg-white/10 backdrop-blur-sm p-4 border border-white/20">
-                <div className="text-2xl sm:text-3xl font-bold text-white">1000+</div>
+                <div className="text-3xl font-bold text-white">1000+</div>
                 <div className="text-sm text-blue-100">Programs</div>
               </div>
             </div>
@@ -181,7 +181,7 @@ export default function FindUniversitiesPage() {
           )}
 
           {/* Results Header */}
-          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mb-8 flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">
                 {isLoading ? "Loading..." : `${filteredUniversities.length} Universities Found`}
