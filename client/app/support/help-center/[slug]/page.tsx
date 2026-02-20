@@ -8,6 +8,12 @@ type HelpCenterArticlePageProps = {
   params: { slug: string };
 };
 
+export const dynamic = "force-dynamic";
+
+export function generateStaticParams() {
+  return helpCenterArticles.map((article) => ({ slug: article.slug }));
+}
+
 export function generateMetadata({ params }: HelpCenterArticlePageProps) {
   const article = helpCenterArticles.find((entry) => entry.slug === params.slug);
 
