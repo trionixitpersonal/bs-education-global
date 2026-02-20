@@ -45,10 +45,10 @@ export default function Footer() {
   };
 
   const socialLinks = [
-    { name: "Facebook", icon: Facebook, href: "#" },
+    { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/bseducationglobal" },
     { name: "Twitter", icon: Twitter, href: "#" },
     { name: "LinkedIn", icon: Linkedin, href: "#" },
-    { name: "Instagram", icon: Instagram, href: "#" },
+    { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/bsedu_global/" },
   ];
 
   return (
@@ -185,11 +185,14 @@ export default function Footer() {
             <div className="flex items-center gap-4">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
+                const isExternal = social.href.startsWith("http");
                 return (
                   <a
                     key={social.name}
                     href={social.href}
                     aria-label={social.name}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noreferrer" : undefined}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
                     <Icon className="h-5 w-5" />
