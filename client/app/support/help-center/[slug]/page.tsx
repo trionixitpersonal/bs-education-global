@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 import { helpCenterArticles } from "@/lib/mock-data/help-center-articles";
@@ -30,11 +29,12 @@ export function generateMetadata({ params }: HelpCenterArticlePageProps) {
 }
 
 export default function HelpCenterArticlePage({ params }: HelpCenterArticlePageProps) {
-  const article = helpCenterArticles.find((entry) => entry.slug === params.slug);
-
-  if (!article) {
-    notFound();
-  }
+  const normalizedSlug = decodeURIComponent(params.slug).toLowerCase();
+  const article = helpCenterArticles.find(
+    (entry) => entry.slug.toLowerCase() === normalizedSlug
+  );
+  const fallbackArticle = helpCenterArticles[0];
+  const activeArticle = article ?? fallbackArticle;
 
   return (
     <main className="w-full overflow-x-hidden bg-background pt-24 lg:pt-28">
@@ -53,19 +53,24 @@ export default function HelpCenterArticlePage({ params }: HelpCenterArticlePageP
           <div className="mx-auto max-w-3xl">
             <div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
               <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                {article.category}
+                {activeArticle.category}
               </span>
-              <span>{article.readTime}</span>
+              <span>{activeArticle.readTime}</span>
             </div>
             <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              {article.title}
+              {activeArticle.title}
             </h1>
             <p className="mb-8 text-lg text-muted-foreground">
-              {article.description}
+              {activeArticle.description}
             </p>
+            {!article ? (
+              <div className="rounded-lg border border-dashed border-border bg-muted/30 p-4 text-sm text-muted-foreground">
+                We could not find that article. Showing a related guide instead.
+              </div>
+            ) : null}
 
             <div className="space-y-4 text-base text-foreground">
-              {article.content.map((paragraph) => (
+              {activeArticle.content.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
