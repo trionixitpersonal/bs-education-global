@@ -49,7 +49,16 @@ export function ProgramDialog({ program, onClose }: Props) {
 
   useEffect(() => {
     if (program) {
-      setFormData(program);
+      setFormData({
+        id: program.id,
+        university_id: program.university_id,
+        name: program.name || "",
+        level: program.level || "",
+        duration: program.duration || "",
+        tuition: program.tuition || "",
+        description: program.description || "",
+        requirements: Array.isArray(program.requirements) ? program.requirements : [],
+      });
     } else {
       // Reset to initial state for new program
       setFormData({

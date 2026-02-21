@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/client";
 
+function sanitizeProgramPayload(body: any) {
+  return {
+    university_id: body?.university_id || null,
+    name: body?.name,
+    level: body?.level,
+    duration: body?.duration,
+    tuition: body?.tuition,
+    description: body?.description || "",
+    requirements: Array.isArray(body?.requirements) ? body.requirements : [],
+  };
+}
+
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -8,12 +20,13 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
+    const payload = sanitizeProgramPayload(body);
     
     console.log("Updating program with data:", body);
     
     const { data, error } = await supabaseAdmin
       .from("programs")
-      .update(body)
+      .update(payload)
       .eq("id", id)
       .select()
       .single();

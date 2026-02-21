@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/client";
 
+function sanitizeProgramPayload(body: any) {
+  return {
+    university_id: body?.university_id || null,
+    name: body?.name,
+    level: body?.level,
+    duration: body?.duration,
+    tuition: body?.tuition,
+    description: body?.description || "",
+    requirements: Array.isArray(body?.requirements) ? body.requirements : [],
+  };
+}
+
 export async function GET() {
   try {
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
@@ -29,6 +41,12 @@ export async function GET() {
       id: program.id,
       name: program.name,
       university: program.universities?.name || "Unknown University",
+      universities: program.universities
+        ? {
+            id: program.universities.id,
+            name: program.universities.name,
+          }
+        : undefined,
       level: program.level,
       duration: program.duration,
       tuition: program.tuition,
@@ -47,17 +65,18 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const payload = sanitizeProgramPayload(body);
     
     console.log("Creating program with data:", body);
     
     // Check for duplicates: same university + name + level
-    if (body.university_id && body.name && body.level) {
+    if (payload.university_id && payload.name && payload.level) {
       const { data: existingPrograms, error: checkError } = await supabaseAdmin
         .from("programs")
         .select("*")
-        .eq("university_id", body.university_id)
-        .eq("name", body.name)
-        .eq("level", body.level);
+        .eq("university_id", payload.university_id)
+        .eq("name", payload.name)
+        .eq("level", payload.level);
 
       if (checkError) {
         console.error("Error checking for duplicates:", checkError);
@@ -65,7 +84,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           { 
             error: "Duplicate program detected", 
-            message: `This program (${body.name} - ${body.level}) already exists for this university.` 
+            message: `This program (${payload.name} - ${payload.level}) already exists for this university.` 
           },
           { status: 409 }
         );
@@ -74,7 +93,7 @@ export async function POST(request: NextRequest) {
     
     const { data, error } = await supabaseAdmin
       .from("programs")
-      .insert([body])
+      .insert([payload])
       .select()
       .single();
 
