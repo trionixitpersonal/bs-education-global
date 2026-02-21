@@ -2,19 +2,9 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
 
-// Validate required environment variables
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-  throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL environment variable");
-}
-if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-  throw new Error("Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable");
-}
-if (!process.env.NEXTAUTH_SECRET) {
-  throw new Error("Missing NEXTAUTH_SECRET environment variable");
-}
-
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const authSecret = process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET || "dev-fallback-secret-change-me";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -26,6 +16,11 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+
+        if (!supabaseUrl || !supabaseAnonKey) {
+          console.error("Auth configuration error: missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
           return null;
         }
 
@@ -88,7 +83,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: authSecret,
 };
 
 const handler = NextAuth(authOptions);
