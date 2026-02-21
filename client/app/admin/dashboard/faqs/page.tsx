@@ -98,7 +98,7 @@ export default function FAQsAdminPage() {
               {faqs.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                    No FAQs found. Click "Add FAQ" to create one.
+                    No FAQs found. Click &quot;Add FAQ&quot; to create one.
                   </td>
                 </tr>
               ) : (

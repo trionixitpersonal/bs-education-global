@@ -21,11 +21,7 @@ export default function InterviewPreparationAdmin() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingTip, setEditingTip] = useState<InterviewTip | null>(null);
 
-  useEffect(() => {
-    fetchTips();
-  }, []);
-
-  const fetchTips = async () => {
+  async function fetchTips() {
     try {
       const response = await fetch("/api/interview-preparation");
       const data = await response.json();
@@ -33,7 +29,15 @@ export default function InterviewPreparationAdmin() {
     } catch (error) {
       console.error("Error fetching tips:", error);
     }
-  };
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      void fetchTips();
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleEdit = (tip: InterviewTip) => {
     setEditingTip(tip);

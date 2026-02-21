@@ -4,15 +4,36 @@ import { useState, useEffect } from "react";
 import { Save, Plus, Trash2, AlertCircle, CheckCircle } from "lucide-react";
 import { getCareersData, updateCareersData } from "../../actions";
 
+interface CareerBenefit {
+  title: string;
+  icon: string;
+  description: string;
+}
+
+interface CareerPosition {
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  description: string;
+  requirements: string[];
+}
+
+interface CareersData {
+  hero: { title: string; subtitle: string };
+  benefits: CareerBenefit[];
+  positions: CareerPosition[];
+}
+
 export default function CareersAdminPage() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<CareersData | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   useEffect(() => {
     async function loadData() {
-      const careersData = await getCareersData();
+      const careersData = (await getCareersData()) as CareersData;
       setData(careersData);
       setLoading(false);
     }
@@ -51,11 +72,11 @@ export default function CareersAdminPage() {
   const removePosition = (index: number) => {
     setData({
       ...data,
-      positions: data.positions.filter((_: any, i: number) => i !== index),
+      positions: data.positions.filter((_, i: number) => i !== index),
     });
   };
 
-  const updatePosition = (index: number, field: string, value: any) => {
+  const updatePosition = (index: number, field: string, value: string) => {
     const newPositions = [...data.positions];
     newPositions[index] = { ...newPositions[index], [field]: value };
     setData({ ...data, positions: newPositions });
@@ -76,7 +97,7 @@ export default function CareersAdminPage() {
   const removeRequirement = (posIndex: number, reqIndex: number) => {
     const newPositions = [...data.positions];
     newPositions[posIndex].requirements = newPositions[posIndex].requirements.filter(
-      (_: any, i: number) => i !== reqIndex
+      (_, i: number) => i !== reqIndex
     );
     setData({ ...data, positions: newPositions });
   };
@@ -163,7 +184,7 @@ export default function CareersAdminPage() {
       <div className="bg-white rounded-xl p-6 border border-gray-200 mb-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Benefits</h2>
         <div className="space-y-4">
-          {data.benefits.map((benefit: any, index: number) => (
+          {data.benefits.map((benefit: CareerBenefit, index: number) => (
             <div key={index} className="p-4 bg-gray-50 rounded-lg">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -213,7 +234,7 @@ export default function CareersAdminPage() {
           </button>
         </div>
         <div className="space-y-6">
-          {data.positions.map((position: any, posIndex: number) => (
+          {data.positions.map((position: CareerPosition, posIndex: number) => (
             <div key={posIndex} className="p-6 bg-gray-50 rounded-lg relative border border-gray-200">
               <button
                 onClick={() => removePosition(posIndex)}

@@ -13,15 +13,21 @@ export async function PUT(
       .from("faqs")
       .update(body)
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("Error updating FAQ:", error);
       throw error;
     }
 
-    return NextResponse.json(data);
+    if (!data || data.length === 0) {
+      return NextResponse.json(
+        { error: "FAQ not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(data[0]);
   } catch (error) {
     console.error("Failed to update FAQ:", error);
     return NextResponse.json(

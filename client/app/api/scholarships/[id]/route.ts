@@ -22,7 +22,7 @@ export async function GET(
     }
 
     return NextResponse.json(data);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Scholarship not found" },
       { status: 404 }
@@ -42,8 +42,7 @@ export async function PUT(
       .from("scholarships")
       .update(body)
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("Supabase error updating scholarship:", error);
@@ -53,11 +52,18 @@ export async function PUT(
       );
     }
 
-    return NextResponse.json(data);
-  } catch (error: any) {
+    if (!data || data.length === 0) {
+      return NextResponse.json(
+        { error: "Scholarship not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(data[0]);
+  } catch (error: unknown) {
     console.error("Failed to update scholarship:", error);
     return NextResponse.json(
-      { error: error?.message || "Failed to update scholarship" },
+      { error: error instanceof Error ? error.message : "Failed to update scholarship" },
       { status: 500 }
     );
   }
@@ -83,10 +89,10 @@ export async function DELETE(
     }
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to delete scholarship:", error);
     return NextResponse.json(
-      { error: error?.message || "Failed to delete scholarship" },
+      { error: error instanceof Error ? error.message : "Failed to delete scholarship" },
       { status: 500 }
     );
   }

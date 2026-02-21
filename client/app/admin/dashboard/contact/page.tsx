@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { 
-  Mail, Phone, Calendar, FileCheck, ShieldCheck, 
+  Mail, Calendar, FileCheck, ShieldCheck, 
   Eye, Trash2, CheckCircle, Clock, XCircle,
   Filter, RefreshCw, MessageSquare, Download, FileText
 } from "lucide-react";
@@ -63,7 +63,7 @@ export default function AdminContactPage() {
     return files;
   };
 
-  const fetchSubmissions = async () => {
+  const fetchSubmissions = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/admin/contact?type=${typeFilter}&status=${statusFilter}`, {
@@ -77,11 +77,11 @@ export default function AdminContactPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [statusFilter, typeFilter]);
 
   useEffect(() => {
-    fetchSubmissions();
-  }, []);
+    void fetchSubmissions();
+  }, [fetchSubmissions]);
 
   useEffect(() => {
     let result = [...submissions];

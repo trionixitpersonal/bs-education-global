@@ -22,11 +22,7 @@ export default function CountryRequirementsAdmin() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingRequirement, setEditingRequirement] = useState<CountryRequirement | null>(null);
 
-  useEffect(() => {
-    fetchRequirements();
-  }, []);
-
-  const fetchRequirements = async () => {
+  async function fetchRequirements() {
     try {
       const response = await fetch("/api/country-requirements");
       const data = await response.json();
@@ -34,7 +30,15 @@ export default function CountryRequirementsAdmin() {
     } catch (error) {
       console.error("Error fetching requirements:", error);
     }
-  };
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      void fetchRequirements();
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleEdit = (requirement: CountryRequirement) => {
     setEditingRequirement(requirement);

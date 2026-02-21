@@ -96,7 +96,7 @@ export default function DestinationsAdminPage() {
               {destinations.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
-                    No destinations found. Click "Add Destination" to create one.
+                    No destinations found. Click &quot;Add Destination&quot; to create one.
                   </td>
                 </tr>
               ) : (

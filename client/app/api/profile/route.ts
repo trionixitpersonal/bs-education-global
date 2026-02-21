@@ -4,7 +4,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { createClient } from "@supabase/supabase-js";
 
 // GET - Fetch user profile
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
@@ -73,7 +73,15 @@ export async function PUT(request: NextRequest) {
     console.log("Found user ID:", userProfile.id);
 
     // Prepare update data - convert empty strings to null for date field
-    const updateData: any = {
+    const updateData: {
+      full_name: string | null;
+      phone: string | null;
+      address: string | null;
+      city: string | null;
+      country: string | null;
+      date_of_birth: string | null;
+      updated_at: string;
+    } = {
       full_name: full_name || null,
       phone: phone || null,
       address: address || null,
@@ -88,16 +96,19 @@ export async function PUT(request: NextRequest) {
       .from("profiles")
       .update(updateData)
       .eq("id", userProfile.id)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("Error updating profile:", error);
       return NextResponse.json({ error: "Failed to update profile", details: error.message }, { status: 500 });
     }
 
-    console.log("Profile updated successfully:", data);
-    return NextResponse.json({ success: true, profile: data });
+    if (!data || data.length === 0) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    console.log("Profile updated successfully:", data[0]);
+    return NextResponse.json({ success: true, profile: data[0] });
   } catch (error) {
     console.error("Error in PUT /api/profile:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

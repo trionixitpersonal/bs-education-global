@@ -62,9 +62,9 @@ export default function ProgramsAdminPage() {
         throw new Error(errorData.error || "Failed to delete program");
       }
       fetchPrograms();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to delete program:", error);
-      alert(`Failed to delete program: ${error.message}`);
+      alert(`Failed to delete program: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
@@ -136,7 +136,7 @@ export default function ProgramsAdminPage() {
               {programs.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
-                    No programs found. Click "Add Program" to create one.
+                    No programs found. Click &quot;Add Program&quot; to create one.
                   </td>
                 </tr>
               ) : (

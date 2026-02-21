@@ -102,7 +102,7 @@ export default function VisaGuidesAdminPage() {
               {guides.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                    No visa guides found. Click "Add Visa Guide" to create one.
+                    No visa guides found. Click &quot;Add Visa Guide&quot; to create one.
                   </td>
                 </tr>
               ) : (

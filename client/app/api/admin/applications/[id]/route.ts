@@ -13,20 +13,24 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userRole = (session.user as any).role;
+    const userRole = (session.user as { role?: string }).role;
     
     // Only admins can update application status
     if (!['admin', 'super_admin'].includes(userRole)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const { status } = await request.json();
+    const { status } = (await request.json()) as { status: string };
     const { id: applicationId } = await params;
 
     console.log("Updating application:", applicationId, "to status:", status);
 
     // Prepare update data
-    const updateData: any = { 
+    const updateData: {
+      status: string;
+      updated_at: string;
+      submitted_at?: string;
+    } = {
       status,
       updated_at: new Date().toISOString()
     };
@@ -41,18 +45,24 @@ export async function PATCH(
       .from("applications")
       .update(updateData)
       .eq("id", applicationId)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("Error updating application status:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    console.log("Application updated successfully:", data);
-    return NextResponse.json(data);
-  } catch (error: any) {
+    if (!data || data.length === 0) {
+      return NextResponse.json({ error: "Application not found" }, { status: 404 });
+    }
+
+    console.log("Application updated successfully:", data[0]);
+    return NextResponse.json(data[0]);
+  } catch (error: unknown) {
     console.error("Failed to update application status:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Failed to update application status" },
+      { status: 500 }
+    );
   }
 }

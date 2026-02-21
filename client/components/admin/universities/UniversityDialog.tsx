@@ -33,16 +33,30 @@ export function UniversityDialog({ university, onClose }: Props) {
     website_url: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     if (university) {
       setFormData(university);
+    } else {
+      setFormData({
+        name: "",
+        country: "",
+        city: "",
+        ranking: 0,
+        description: "",
+        tuition_range: "",
+        image_url: "",
+        website_url: "",
+      });
     }
+    setErrorMessage("");
   }, [university]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage("");
 
     try {
       const url = university
@@ -50,15 +64,23 @@ export function UniversityDialog({ university, onClose }: Props) {
         : "/api/universities";
       const method = university ? "PUT" : "POST";
 
-      await fetch(url, {
+      const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(data?.error || "Failed to save university");
+        return;
+      }
+
       onClose();
     } catch (error) {
       console.error("Failed to save university:", error);
+      setErrorMessage("Failed to save university");
     } finally {
       setIsLoading(false);
     }
@@ -77,6 +99,12 @@ export function UniversityDialog({ university, onClose }: Props) {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {errorMessage && (
+            <div className="rounded-md bg-red-50 border border-red-200 p-4">
+              <p className="text-sm text-red-800">{errorMessage}</p>
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Name *</label>
             <input
@@ -171,7 +199,7 @@ export function UniversityDialog({ university, onClose }: Props) {
           </div>
 
           <div className="flex justify-end gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={onClose} disabled={isLoading}>
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>

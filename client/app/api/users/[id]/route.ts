@@ -6,15 +6,23 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const body = await request.json();
+    const body = (await request.json()) as {
+      email?: string;
+      full_name?: string;
+      role?: string;
+      password?: string;
+    };
     const { id } = await params;
     const { email, full_name, role, password } = body;
 
     // Update auth user metadata and password if provided
-    const authUpdate: any = {
+    const authUpdate: {
+      user_metadata: { full_name: string; role: string };
+      password?: string;
+    } = {
       user_metadata: {
-        full_name,
-        role
+        full_name: full_name || "",
+        role: role || "",
       }
     };
 
@@ -41,8 +49,7 @@ export async function PUT(
       .from("profiles")
       .update({ email, full_name, role })
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("Error updating profile:", error);
@@ -52,11 +59,18 @@ export async function PUT(
       );
     }
 
-    return NextResponse.json(data);
-  } catch (error: any) {
+    if (!data || data.length === 0) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(data[0]);
+  } catch (error: unknown) {
     console.error("Failed to update user:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to update user" },
+      { error: error instanceof Error ? error.message : "Failed to update user" },
       { status: 500 }
     );
   }
@@ -81,10 +95,10 @@ export async function DELETE(
     }
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to delete user:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to delete user" },
+      { error: error instanceof Error ? error.message : "Failed to delete user" },
       { status: 500 }
     );
   }

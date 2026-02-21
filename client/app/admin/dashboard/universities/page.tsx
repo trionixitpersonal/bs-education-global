@@ -24,8 +24,19 @@ export default function UniversitiesAdminPage() {
   const [editingUniversity, setEditingUniversity] = useState<University | null>(null);
 
   const fetchUniversities = async () => {
+    setIsLoading(true);
     try {
-      const response = await fetch("/api/universities");
+      const response = await fetch(`/api/universities?t=${Date.now()}`, {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch universities");
+      }
+
       const data = await response.json();
       setUniversities(data || []);
     } catch (error) {

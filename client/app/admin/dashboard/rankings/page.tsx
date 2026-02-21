@@ -106,7 +106,7 @@ export default function RankingsAdminPage() {
               {rankings.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
-                    No rankings found. Click "Add Ranking" to create one.
+                    No rankings found. Click &quot;Add Ranking&quot; to create one.
                   </td>
                 </tr>
               ) : (

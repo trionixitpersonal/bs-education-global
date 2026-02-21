@@ -4,15 +4,35 @@ import { useState, useEffect } from "react";
 import { Save, Plus, Trash2, AlertCircle, CheckCircle } from "lucide-react";
 import { getAboutData, updateAboutData } from "../../actions";
 
+interface AboutValue {
+  title: string;
+  icon: string;
+  description: string;
+}
+
+interface TeamMember {
+  name: string;
+  role: string;
+  image: string;
+  bio: string;
+}
+
+interface AboutData {
+  hero: { title: string; subtitle: string };
+  mission: { title: string; description: string };
+  values: AboutValue[];
+  team: TeamMember[];
+}
+
 export default function AboutAdminPage() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<AboutData | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   useEffect(() => {
     async function loadData() {
-      const aboutData = await getAboutData();
+      const aboutData = (await getAboutData()) as AboutData;
       setData(aboutData);
       setLoading(false);
     }
@@ -44,7 +64,7 @@ export default function AboutAdminPage() {
   const removeTeamMember = (index: number) => {
     setData({
       ...data,
-      team: data.team.filter((_: any, i: number) => i !== index),
+      team: data.team.filter((_, i: number) => i !== index),
     });
   };
 
@@ -161,7 +181,7 @@ export default function AboutAdminPage() {
       <div className="bg-white rounded-xl p-6 border border-gray-200 mb-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Core Values</h2>
         <div className="space-y-4">
-          {data.values.map((value: any, index: number) => (
+          {data.values.map((value: AboutValue, index: number) => (
             <div key={index} className="p-4 bg-gray-50 rounded-lg">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -211,7 +231,7 @@ export default function AboutAdminPage() {
           </button>
         </div>
         <div className="space-y-4">
-          {data.team.map((member: any, index: number) => (
+          {data.team.map((member: TeamMember, index: number) => (
             <div key={index} className="p-4 bg-gray-50 rounded-lg relative">
               <button
                 onClick={() => removeTeamMember(index)}

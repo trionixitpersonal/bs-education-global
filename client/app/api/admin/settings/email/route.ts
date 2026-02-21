@@ -43,11 +43,10 @@ export async function PUT(request: NextRequest) {
           updated_at: new Date().toISOString(),
         })
         .eq("id", existing.id)
-        .select()
-        .single();
+        .select();
 
       if (error) throw error;
-      result = data;
+      result = data?.[0] ?? null;
     } else {
       // Insert new settings
       const { data, error } = await supabaseAdmin
@@ -61,10 +60,10 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json(result);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to save email settings:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to save email settings" },
+      { error: error instanceof Error ? error.message : "Failed to save email settings" },
       { status: 500 }
     );
   }

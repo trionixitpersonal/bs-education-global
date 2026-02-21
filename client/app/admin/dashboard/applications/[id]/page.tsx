@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Building2, BookOpen, Calendar, Clock, CheckCircle, XCircle, Loader2, User, FileText, Download, Eye, Package } from "lucide-react";
+import { ArrowLeft, Building2, BookOpen, Calendar, Clock, CheckCircle, XCircle, Loader2, User, FileText, Download, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Application {
@@ -44,11 +44,26 @@ export default function AdminApplicationDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  useEffect(() => {
-    fetchApplication();
+  const fetchDocuments = useCallback(async (userId: string) => {
+    try {
+      console.log("Fetching documents for user:", userId);
+      const response = await fetch(`/api/admin/documents/${userId}`);
+      console.log("Documents fetch response status:", response.status);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Documents fetched:", data.length, "documents");
+        setDocuments(data);
+      } else {
+        const error = await response.json();
+        console.error("Failed to fetch documents:", error);
+      }
+    } catch (error) {
+      console.error("Failed to fetch documents:", error);
+    }
   }, []);
 
-  const fetchApplication = async () => {
+  const fetchApplication = useCallback(async () => {
     try {
       const response = await fetch(`/api/admin/applications/${params.id}/detail`);
       if (response.ok) {
@@ -68,26 +83,11 @@ export default function AdminApplicationDetailPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [fetchDocuments, params.id, router]);
 
-  const fetchDocuments = async (userId: string) => {
-    try {
-      console.log("Fetching documents for user:", userId);
-      const response = await fetch(`/api/admin/documents/${userId}`);
-      console.log("Documents fetch response status:", response.status);
-      
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Documents fetched:", data.length, "documents");
-        setDocuments(data);
-      } else {
-        const error = await response.json();
-        console.error("Failed to fetch documents:", error);
-      }
-    } catch (error) {
-      console.error("Failed to fetch documents:", error);
-    }
-  };
+  useEffect(() => {
+    void fetchApplication();
+  }, [fetchApplication]);
 
   const handleStatusUpdate = async (newStatus: string) => {
     try {
@@ -108,7 +108,7 @@ export default function AdminApplicationDetailPage() {
     }
   };
 
-  const handleDownloadSingle = async (documentId: string, fileName: string) => {
+  const handleDownloadSingle = async (documentId: string) => {
     if (!application) return;
     
     setIsDownloading(true);
@@ -503,7 +503,7 @@ export default function AdminApplicationDetailPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleDownloadSingle(doc.id, doc.name)}
+                        onClick={() => handleDownloadSingle(doc.id)}
                         disabled={isDownloading}
                         className="flex items-center gap-1"
                       >

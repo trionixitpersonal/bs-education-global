@@ -7,8 +7,10 @@ import { updateBlogData } from "../../actions";
 
 export default function BlogAdminPage() {
   const initialPosts = getBlogPosts();
-  const [posts, setPosts] = useState(initialPosts);
-  const [editingPost, setEditingPost] = useState<any>(null);
+  type BlogPost = (typeof initialPosts)[number];
+
+  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -42,7 +44,7 @@ export default function BlogAdminPage() {
     setEditingPost(newPost);
   };
 
-  const handleEdit = (post: any) => {
+  const handleEdit = (post: BlogPost) => {
     setEditingPost({ ...post });
   };
 

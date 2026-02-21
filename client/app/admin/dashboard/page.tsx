@@ -1,6 +1,6 @@
 import { requireAdmin } from "@/lib/auth/auth-utils";
 import { StatsCards } from "@/components/admin/StatsCards";
-import { AlertCircle, GraduationCap, Award, BookOpen, Users, FileText, Settings } from "lucide-react";
+import { GraduationCap, Award, BookOpen, Users, FileText, Settings } from "lucide-react";
 import Link from "next/link";
 
 export default async function AdminDashboardPage() {

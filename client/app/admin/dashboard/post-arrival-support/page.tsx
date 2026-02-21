@@ -21,11 +21,7 @@ export default function PostArrivalSupportAdmin() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingSupport, setEditingSupport] = useState<PostArrivalSupport | null>(null);
 
-  useEffect(() => {
-    fetchSupports();
-  }, []);
-
-  const fetchSupports = async () => {
+  async function fetchSupports() {
     try {
       const response = await fetch("/api/post-arrival-support");
       const data = await response.json();
@@ -33,7 +29,15 @@ export default function PostArrivalSupportAdmin() {
     } catch (error) {
       console.error("Error fetching supports:", error);
     }
-  };
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      void fetchSupports();
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleEdit = (support: PostArrivalSupport) => {
     setEditingSupport(support);

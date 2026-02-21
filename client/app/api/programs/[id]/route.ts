@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/client";
 
-function sanitizeProgramPayload(body: any) {
+function sanitizeProgramPayload(body: Record<string, unknown> | null | undefined) {
   return {
-    university_id: body?.university_id || null,
-    name: body?.name,
-    level: body?.level,
-    duration: body?.duration,
-    tuition: body?.tuition,
-    description: body?.description || "",
-    requirements: Array.isArray(body?.requirements) ? body.requirements : [],
+    university_id: typeof body?.university_id === "string" ? body.university_id : null,
+    name: typeof body?.name === "string" ? body.name : "",
+    level: typeof body?.level === "string" ? body.level : "",
+    duration: typeof body?.duration === "string" ? body.duration : "",
+    tuition: typeof body?.tuition === "string" ? body.tuition : "",
+    description: typeof body?.description === "string" ? body.description : "",
+    requirements: Array.isArray(body?.requirements)
+      ? body.requirements.filter((item): item is string => typeof item === "string")
+      : [],
   };
 }
 
@@ -19,7 +21,7 @@ export async function PUT(
 ) {
   try {
     const { id } = await params;
-    const body = await request.json();
+    const body = (await request.json()) as Record<string, unknown>;
     const payload = sanitizeProgramPayload(body);
     
     console.log("Updating program with data:", body);
@@ -28,8 +30,7 @@ export async function PUT(
       .from("programs")
       .update(payload)
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("Supabase error updating program:", error);
@@ -39,11 +40,18 @@ export async function PUT(
       );
     }
 
-    return NextResponse.json(data);
-  } catch (error: any) {
+    if (!data || data.length === 0) {
+      return NextResponse.json(
+        { error: "Program not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(data[0]);
+  } catch (error: unknown) {
     console.error("Failed to update program:", error);
     return NextResponse.json(
-      { error: error?.message || "Failed to update program" },
+      { error: error instanceof Error ? error.message : "Failed to update program" },
       { status: 500 }
     );
   }
@@ -69,10 +77,10 @@ export async function DELETE(
     }
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to delete program:", error);
     return NextResponse.json(
-      { error: error?.message || "Failed to delete program" },
+      { error: error instanceof Error ? error.message : "Failed to delete program" },
       { status: 500 }
     );
   }

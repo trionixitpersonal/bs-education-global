@@ -290,7 +290,7 @@ export default function SettingsAdminPage() {
                 <h3 className="text-sm font-semibold text-blue-900 mb-2">Setup Instructions:</h3>
                 <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
                   <li>For Gmail: Use App Password instead of regular password</li>
-                  <li>Enable "Less secure app access" or create App-specific password</li>
+                  <li>Enable &quot;Less secure app access&quot; or create App-specific password</li>
                   <li>Common ports: 587 (TLS), 465 (SSL), 25 (not recommended)</li>
                   <li>Test the configuration by submitting a support form</li>
                 </ul>

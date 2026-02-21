@@ -13,15 +13,21 @@ export async function PUT(
       .from("qs_rankings")
       .update(body)
       .eq("id", id)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("Error updating ranking:", error);
       throw error;
     }
 
-    return NextResponse.json(data);
+    if (!data || data.length === 0) {
+      return NextResponse.json(
+        { error: "Ranking not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(data[0]);
   } catch (error) {
     console.error("Failed to update ranking:", error);
     return NextResponse.json(

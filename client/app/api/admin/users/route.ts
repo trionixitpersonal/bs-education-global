@@ -7,7 +7,8 @@ export async function GET(request: NextRequest) {
   try {
     // Check if user is admin
     const session = await getServerSession(authOptions);
-    if (!session?.user || ((session.user as any).role !== "admin" && (session.user as any).role !== "super_admin")) {
+    const role = (session?.user as { role?: string } | undefined)?.role;
+    if (!session?.user || (role !== "admin" && role !== "super_admin")) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
@@ -39,10 +40,10 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({ users }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to fetch users:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to fetch users" },
+      { error: error instanceof Error ? error.message : "Failed to fetch users" },
       { status: 500 }
     );
   }
@@ -52,7 +53,8 @@ export async function PATCH(request: NextRequest) {
   try {
     // Check if user is admin
     const session = await getServerSession(authOptions);
-    if (!session?.user || ((session.user as any).role !== "admin" && (session.user as any).role !== "super_admin")) {
+    const role = (session?.user as { role?: string } | undefined)?.role;
+    if (!session?.user || (role !== "admin" && role !== "super_admin")) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
@@ -75,8 +77,7 @@ export async function PATCH(request: NextRequest) {
       .from("profiles")
       .update({ is_approved: approved })
       .eq("id", userId)
-      .select()
-      .single();
+      .select();
 
     if (error) {
       console.error("Supabase error updating user:", error);
@@ -86,14 +87,21 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
+    if (!user || user.length === 0) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(
-      { message: `User ${approved ? "approved" : "rejected"}`, user },
+      { message: `User ${approved ? "approved" : "rejected"}`, user: user[0] },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to update user:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to update user" },
+      { error: error instanceof Error ? error.message : "Failed to update user" },
       { status: 500 }
     );
   }

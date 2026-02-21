@@ -41,7 +41,7 @@ export default function UsersAdminPage() {
       if (!response.ok) throw new Error("Failed to fetch users");
       const data = await response.json();
       // Ensure is_approved field exists (default to true for admins/super_admins)
-      const processedData = (data || []).map((user: any) => ({
+      const processedData = ((data || []) as User[]).map((user) => ({
         ...user,
         is_approved: user.is_approved !== undefined ? user.is_approved : user.role !== 'user'
       }));
@@ -171,9 +171,9 @@ export default function UsersAdminPage() {
       }
       
       await fetchUsers();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error approving user:", error);
-      alert(`Failed to approve user: ${error.message}`);
+      alert(`Failed to approve user: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setProcessingId(null);
     }
@@ -203,9 +203,9 @@ export default function UsersAdminPage() {
       }
       
       await fetchUsers();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error rejecting user:", error);
-      alert(`Failed to reject user: ${error.message}`);
+      alert(`Failed to reject user: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setProcessingId(null);
     }

@@ -102,7 +102,7 @@ export default function ResourcesAdminPage() {
               {resources.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                    No resources found. Click "Add Resource" to create one.
+                    No resources found. Click &quot;Add Resource&quot; to create one.
                   </td>
                 </tr>
               ) : (

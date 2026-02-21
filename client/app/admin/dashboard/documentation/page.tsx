@@ -100,7 +100,7 @@ export default function DocumentationAdminPage() {
               {guides.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                    No documentation guides found. Click "Add Documentation Guide" to create one.
+                    No documentation guides found. Click &quot;Add Documentation Guide&quot; to create one.
                   </td>
                 </tr>
               ) : (

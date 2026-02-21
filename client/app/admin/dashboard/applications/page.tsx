@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, Filter, Eye, Trash2, Clock, CheckCircle, XCircle, User, Mail, Calendar } from "lucide-react";
+import { Search, Eye, Clock, CheckCircle, XCircle, User, Mail, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Application {
